@@ -3,25 +3,15 @@
   "version": "0.1.0",
   "description": "Shared postMessage protocol, React hooks, and TanStack Query integration for robscholey.com sub-apps",
   "type": "module",
-  "main": "./dist/index.js",
-  "module": "./dist/index.mjs",
-  "types": "./dist/index.d.ts",
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
   "exports": {
-    ".": {
-      "types": "./dist/index.d.ts",
-      "import": "./dist/index.mjs",
-      "require": "./dist/index.js"
-    },
-    "./ui": {
-      "types": "./dist/ui/index.d.ts",
-      "import": "./dist/ui/index.mjs",
-      "require": "./dist/ui/index.js"
-    },
+    ".": "./src/index.ts",
+    "./ui": "./src/ui/index.ts",
     "./ui/theme.css": "./src/ui/theme.css"
   },
   "files": [
-    "dist",
-    "src/ui/theme.css"
+    "src"
   ],
   "scripts": {
     "build": "tsup && tsc --project tsconfig.build.json --emitDeclarationOnly --outDir dist",
