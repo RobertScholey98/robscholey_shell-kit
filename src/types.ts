@@ -8,6 +8,9 @@ export interface ShellUser {
   type: 'owner' | 'named' | 'anonymous';
 }
 
+/** The active colour theme. */
+export type ShellTheme = 'light' | 'dark';
+
 /** Sent by the shell to provide the embedding context to a child app. */
 export interface ShellContextMessage {
   type: 'shell-context';
@@ -17,6 +20,7 @@ export interface ShellContextMessage {
   jwt: string | null;
   user: ShellUser | null;
   subPath: string | null;
+  theme: ShellTheme;
 }
 
 /** Sent by the shell when a JWT has been refreshed. */
@@ -36,6 +40,12 @@ export interface NavigateToPathMessage {
   path: string;
 }
 
+/** Sent by the shell when the theme changes (user toggle or system preference change). */
+export interface ThemeUpdateMessage {
+  type: 'theme-update';
+  theme: ShellTheme;
+}
+
 /** Sent by a child app to navigate back to the shell's root. */
 export interface NavigateToShellMessage {
   type: 'navigate-to-shell';
@@ -51,6 +61,12 @@ export interface RequestShellContextMessage {
   type: 'request-shell-context';
 }
 
+/** Sent by a child app to request a theme change. The shell is the source of truth. */
+export interface ThemeChangeMessage {
+  type: 'theme-change';
+  theme: ShellTheme;
+}
+
 /** Sent by a child app when its internal route changes. */
 export interface RouteChangeMessage {
   type: 'route-change';
@@ -62,11 +78,13 @@ export type ShellToChildMessage =
   | ShellContextMessage
   | JWTRefreshMessage
   | SessionEndedMessage
-  | NavigateToPathMessage;
+  | NavigateToPathMessage
+  | ThemeUpdateMessage;
 
 /** Union of all messages child apps send to the shell. */
 export type ChildToShellMessage =
   | NavigateToShellMessage
   | JWTRefreshRequestMessage
   | RequestShellContextMessage
-  | RouteChangeMessage;
+  | RouteChangeMessage
+  | ThemeChangeMessage;

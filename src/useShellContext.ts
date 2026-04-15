@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import { getConfig } from './config';
 import { isInIframe } from './isInIframe';
-import type { ShellUser, ShellToChildMessage } from './types';
+import type { ShellUser, ShellTheme, ShellToChildMessage } from './types';
 
 /** The state returned by the {@link useShellContext} hook. */
 export interface ShellContextState {
@@ -17,8 +17,12 @@ export interface ShellContextState {
   isSessionValid: boolean;
   /** The sub-path the shell wants the child to navigate to on mount. */
   subPath: string | null;
+  /** The current colour theme as set by the shell. */
+  theme: ShellTheme;
   /** Sends a request-jwt-refresh message to the shell. */
   requestJWTRefresh: () => void;
+  /** Requests a theme change from the shell. The shell is the source of truth and broadcasts to all iframes. */
+  requestThemeChange: (theme: ShellTheme) => void;
 }
 
 /** Callback invoked when the shell tells the child to navigate to a specific path. */
@@ -36,9 +40,9 @@ function isShellMessage(data: unknown): data is ShellToChildMessage {
 
 /**
  * Hook that manages communication with the robscholey.com shell via postMessage.
- * Listens for `shell-context`, `jwt-refresh`, `session-ended`, and `navigate-to-path` messages.
- * Sends `request-shell-context` on mount when running inside an iframe.
- * Validates message origins against the configured shell origin.
+ * Listens for `shell-context`, `jwt-refresh`, `session-ended`, `navigate-to-path`,
+ * and `theme-update` messages. Sends `request-shell-context` on mount when running
+ * inside an iframe. Validates message origins against the configured shell origin.
  *
  * @param onNavigateToPath - Optional callback invoked when the shell sends a `navigate-to-path` message (browser back/forward).
  */
@@ -49,6 +53,7 @@ export function useShellContext(onNavigateToPath?: NavigateToPathHandler): Shell
   const [jwt, setJwt] = useState<string | null>(null);
   const [isSessionValid, setIsSessionValid] = useState(true);
   const [subPath, setSubPath] = useState<string | null>(null);
+  const [theme, setTheme] = useState<ShellTheme>('light');
 
   useEffect(() => {
     const inIframe = isInIframe();
@@ -66,6 +71,7 @@ export function useShellContext(onNavigateToPath?: NavigateToPathHandler): Shell
         setJwt(data.jwt ?? null);
         setIsSessionValid(true);
         setSubPath(data.subPath ?? null);
+        setTheme(data.theme ?? 'light');
       }
 
       if (data.type === 'jwt-refresh') {
@@ -80,6 +86,10 @@ export function useShellContext(onNavigateToPath?: NavigateToPathHandler): Shell
 
       if (data.type === 'navigate-to-path') {
         onNavigateToPath?.(data.path);
+      }
+
+      if (data.type === 'theme-update') {
+        setTheme(data.theme);
       }
     }
 
@@ -98,6 +108,12 @@ export function useShellContext(onNavigateToPath?: NavigateToPathHandler): Shell
     }
   }, []);
 
+  const requestThemeChange = useCallback((newTheme: ShellTheme) => {
+    if (isInIframe()) {
+      window.parent.postMessage({ type: 'theme-change', theme: newTheme }, getConfig().shellOrigin);
+    }
+  }, []);
+
   return {
     isEmbedded,
     showBackButton,
@@ -105,6 +121,8 @@ export function useShellContext(onNavigateToPath?: NavigateToPathHandler): Shell
     jwt,
     isSessionValid,
     subPath,
+    theme,
     requestJWTRefresh,
+    requestThemeChange,
   };
 }

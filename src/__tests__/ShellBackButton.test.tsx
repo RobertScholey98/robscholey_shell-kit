@@ -20,30 +20,22 @@ afterEach(() => {
 
 describe('ShellBackButton', () => {
   it('renders a button when embedded and showBackButton is true', () => {
-    const { getByRole } = render(
-      <ShellBackButton isEmbedded={true} showBackButton={true} />,
-    );
+    const { getByRole } = render(<ShellBackButton isEmbedded={true} showBackButton={true} />);
     expect(getByRole('button')).toBeDefined();
   });
 
   it('renders nothing when not embedded', () => {
-    const { container } = render(
-      <ShellBackButton isEmbedded={false} showBackButton={true} />,
-    );
+    const { container } = render(<ShellBackButton isEmbedded={false} showBackButton={true} />);
     expect(container.innerHTML).toBe('');
   });
 
   it('renders nothing when showBackButton is false', () => {
-    const { container } = render(
-      <ShellBackButton isEmbedded={true} showBackButton={false} />,
-    );
+    const { container } = render(<ShellBackButton isEmbedded={true} showBackButton={false} />);
     expect(container.innerHTML).toBe('');
   });
 
   it('sends navigate-to-shell on click', () => {
-    const { getByRole } = render(
-      <ShellBackButton isEmbedded={true} showBackButton={true} />,
-    );
+    const { getByRole } = render(<ShellBackButton isEmbedded={true} showBackButton={true} />);
 
     fireEvent.click(getByRole('button'));
 
@@ -91,11 +83,7 @@ describe('ShellBackButton', () => {
   it('calls custom onClick handler alongside navigation', () => {
     const customOnClick = vi.fn();
     const { getByRole } = render(
-      <ShellBackButton
-        isEmbedded={true}
-        showBackButton={true}
-        onClick={customOnClick}
-      />,
+      <ShellBackButton isEmbedded={true} showBackButton={true} onClick={customOnClick} />,
     );
 
     fireEvent.click(getByRole('button'));
@@ -110,11 +98,7 @@ describe('ShellBackButton', () => {
   it('does not navigate if onClick calls preventDefault', () => {
     const customOnClick = vi.fn((e: React.MouseEvent) => e.preventDefault());
     const { getByRole } = render(
-      <ShellBackButton
-        isEmbedded={true}
-        showBackButton={true}
-        onClick={customOnClick}
-      />,
+      <ShellBackButton isEmbedded={true} showBackButton={true} onClick={customOnClick} />,
     );
 
     fireEvent.click(getByRole('button'));

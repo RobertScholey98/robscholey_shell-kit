@@ -51,6 +51,7 @@ describe('useShellContext', () => {
         jwt: 'test-jwt',
         user: { id: '1', name: 'Rob', type: 'owner' },
         subPath: '/projects/123',
+        theme: 'dark',
       });
     });
 
@@ -60,6 +61,7 @@ describe('useShellContext', () => {
     expect(result.current.user).toEqual({ id: '1', name: 'Rob', type: 'owner' });
     expect(result.current.subPath).toBe('/projects/123');
     expect(result.current.isSessionValid).toBe(true);
+    expect(result.current.theme).toBe('dark');
   });
 
   it('rejects messages from invalid origins', () => {
@@ -75,6 +77,7 @@ describe('useShellContext', () => {
           jwt: 'evil-jwt',
           user: null,
           subPath: null,
+          theme: 'dark',
         },
         origin: 'https://evil.com',
       });
@@ -97,6 +100,7 @@ describe('useShellContext', () => {
         jwt: 'old-jwt',
         user: null,
         subPath: null,
+        theme: 'light',
       });
     });
 
@@ -119,6 +123,7 @@ describe('useShellContext', () => {
         jwt: 'test-jwt',
         user: { id: '1', name: 'Rob', type: 'owner' },
         subPath: null,
+        theme: 'light',
       });
     });
 
@@ -153,6 +158,31 @@ describe('useShellContext', () => {
     });
 
     expect(onNavigate).toHaveBeenCalledWith('/projects/456');
+  });
+
+  it('updates theme on theme-update message', () => {
+    const { result } = renderHook(() => useShellContext());
+
+    expect(result.current.theme).toBe('light');
+
+    act(() => {
+      dispatchShellMessage({ type: 'theme-update', theme: 'dark' });
+    });
+
+    expect(result.current.theme).toBe('dark');
+  });
+
+  it('requestThemeChange sends theme-change postMessage', () => {
+    const { result } = renderHook(() => useShellContext());
+
+    act(() => {
+      result.current.requestThemeChange('dark');
+    });
+
+    expect(window.parent.postMessage).toHaveBeenCalledWith(
+      { type: 'theme-change', theme: 'dark' },
+      SHELL_ORIGIN,
+    );
   });
 
   it('ignores messages that are not valid shell messages', () => {

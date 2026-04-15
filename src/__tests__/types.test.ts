@@ -26,6 +26,7 @@ describe('types', () => {
       jwt: null,
       user: null,
       subPath: null,
+      theme: 'light',
     };
     if (msg.type === 'shell-context') {
       expectTypeOf(msg.shellOrigin).toBeString();

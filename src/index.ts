@@ -5,14 +5,17 @@ export type { ShellKitConfig } from './config';
 // Types
 export type {
   ShellUser,
+  ShellTheme,
   ShellContextMessage,
   JWTRefreshMessage,
   SessionEndedMessage,
   NavigateToPathMessage,
+  ThemeUpdateMessage,
   NavigateToShellMessage,
   JWTRefreshRequestMessage,
   RequestShellContextMessage,
   RouteChangeMessage,
+  ThemeChangeMessage,
   ShellToChildMessage,
   ChildToShellMessage,
 } from './types';
