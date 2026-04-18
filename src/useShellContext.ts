@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import { getConfig } from './config';
 import { isInIframe } from './isInIframe';
 import type { ShellUser, ShellTheme, ShellToChildMessage } from './types';
@@ -55,6 +55,15 @@ export function useShellContext(onNavigateToPath?: NavigateToPathHandler): Shell
   const [subPath, setSubPath] = useState<string | null>(null);
   const [theme, setTheme] = useState<ShellTheme>('light');
 
+  // Keep the caller's navigate handler in a ref so the message-listener effect
+  // can reference the latest callback without taking it as a dependency.
+  // Without this, a fresh arrow function every render would re-subscribe on
+  // every render, request the shell context again, and spin indefinitely.
+  const onNavigateToPathRef = useRef(onNavigateToPath);
+  useEffect(() => {
+    onNavigateToPathRef.current = onNavigateToPath;
+  }, [onNavigateToPath]);
+
   useEffect(() => {
     const inIframe = isInIframe();
 
@@ -85,7 +94,7 @@ export function useShellContext(onNavigateToPath?: NavigateToPathHandler): Shell
       }
 
       if (data.type === 'navigate-to-path') {
-        onNavigateToPath?.(data.path);
+        onNavigateToPathRef.current?.(data.path);
       }
 
       if (data.type === 'theme-update') {
@@ -100,7 +109,7 @@ export function useShellContext(onNavigateToPath?: NavigateToPathHandler): Shell
     }
 
     return () => window.removeEventListener('message', handleMessage);
-  }, [onNavigateToPath]);
+  }, []);
 
   const requestJWTRefresh = useCallback(() => {
     if (isInIframe()) {
