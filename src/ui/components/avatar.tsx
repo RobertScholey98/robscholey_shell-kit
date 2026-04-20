@@ -1,11 +1,18 @@
 import * as AvatarPrimitive from '@radix-ui/react-avatar';
 import { cn } from '../lib/cn';
 
-/** A circular avatar container. */
+/**
+ * A circular avatar container. Defaults to the tinted `--primary` surface
+ * with a `--brand-dim` outline — matching the mono-font initial-cap treatment
+ * from the reference design.
+ */
 function Avatar({ className, ...props }: React.ComponentPropsWithRef<typeof AvatarPrimitive.Root>) {
   return (
     <AvatarPrimitive.Root
-      className={cn('relative flex h-10 w-10 shrink-0 overflow-hidden rounded-full', className)}
+      className={cn(
+        'relative inline-flex h-10 w-10 shrink-0 items-center justify-center overflow-hidden rounded-full border border-brand-dim bg-primary text-primary-foreground font-mono text-[0.82rem] font-medium',
+        className,
+      )}
       {...props}
     />
   );
@@ -29,7 +36,7 @@ function AvatarFallback({
   return (
     <AvatarPrimitive.Fallback
       className={cn(
-        'flex h-full w-full items-center justify-center rounded-full bg-muted',
+        'flex h-full w-full items-center justify-center rounded-full bg-primary text-primary-foreground',
         className,
       )}
       {...props}
@@ -37,4 +44,35 @@ function AvatarFallback({
   );
 }
 
-export { Avatar, AvatarImage, AvatarFallback };
+/**
+ * Props for {@link AvatarGroup}. Siblings after the first receive a small
+ * negative margin to overlap, and a ring in `--background` to punch them
+ * apart visually.
+ */
+export type AvatarGroupProps = React.HTMLAttributes<HTMLDivElement>;
+
+/**
+ * A horizontal cluster of overlapping avatars.
+ *
+ * @example
+ * ```tsx
+ * <AvatarGroup>
+ *   <Avatar>RS</Avatar>
+ *   <Avatar>AI</Avatar>
+ *   <Avatar>+2</Avatar>
+ * </AvatarGroup>
+ * ```
+ */
+function AvatarGroup({ className, ...props }: AvatarGroupProps) {
+  return (
+    <div
+      className={cn(
+        'inline-flex items-center [&>*+*]:-ml-2 [&>*+*]:ring-2 [&>*+*]:ring-background',
+        className,
+      )}
+      {...props}
+    />
+  );
+}
+
+export { Avatar, AvatarImage, AvatarFallback, AvatarGroup };

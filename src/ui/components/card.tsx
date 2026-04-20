@@ -1,10 +1,13 @@
 import { cn } from '../lib/cn';
 
-/** A card container with rounded corners and border. */
+/** A card container with rounded corners, card surface, and token-driven border. */
 function Card({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) {
   return (
     <div
-      className={cn('rounded-xl border bg-card text-card-foreground shadow', className)}
+      className={cn(
+        'rounded-lg border border-border bg-card text-foreground shadow-sm',
+        className,
+      )}
       {...props}
     />
   );
@@ -30,9 +33,20 @@ function CardContent({ className, ...props }: React.HTMLAttributes<HTMLDivElemen
   return <div className={cn('p-4 pt-0 sm:p-6 sm:pt-0', className)} {...props} />;
 }
 
-/** The footer section of a card. */
+/**
+ * The footer section of a card. Sits on the mid-surface `--card-2` tier to
+ * visually separate actions from the body content.
+ */
 function CardFooter({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) {
-  return <div className={cn('flex items-center p-4 pt-0 sm:p-6 sm:pt-0', className)} {...props} />;
+  return (
+    <div
+      className={cn(
+        'flex items-center gap-2 rounded-b-lg border-t border-border bg-card-2 p-4 sm:p-6',
+        className,
+      )}
+      {...props}
+    />
+  );
 }
 
 export { Card, CardHeader, CardFooter, CardTitle, CardDescription, CardContent };

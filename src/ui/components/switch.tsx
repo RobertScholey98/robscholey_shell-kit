@@ -1,12 +1,12 @@
 import * as SwitchPrimitive from '@radix-ui/react-switch';
 import { cn } from '../lib/cn';
 
-/** A toggle switch component built on Radix Switch. */
+/** A toggle switch. Track on `--input`, checked track on `--brand`, thumb on `--background`. */
 function Switch({ className, ...props }: React.ComponentPropsWithRef<typeof SwitchPrimitive.Root>) {
   return (
     <SwitchPrimitive.Root
       className={cn(
-        'peer inline-flex h-5 w-9 shrink-0 cursor-pointer items-center rounded-full border-2 border-transparent shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background disabled:cursor-not-allowed disabled:opacity-50 data-[state=checked]:bg-primary data-[state=unchecked]:bg-input',
+        'peer inline-flex h-5 w-9 shrink-0 cursor-pointer items-center rounded-full border-2 border-transparent transition-colors focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-ring focus-visible:shadow-[0_0_0_6px_var(--brand-glow)] disabled:cursor-not-allowed disabled:opacity-50 data-[state=checked]:bg-brand data-[state=unchecked]:bg-input',
         className,
       )}
       {...props}

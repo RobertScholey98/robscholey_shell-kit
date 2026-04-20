@@ -40,6 +40,7 @@ export {
   DialogClose,
   DialogContent,
   DialogHeader,
+  DialogBody,
   DialogFooter,
   DialogTitle,
   DialogDescription,
@@ -60,7 +61,8 @@ export {
 
 export { Separator } from './components/separator';
 
-export { Avatar, AvatarImage, AvatarFallback } from './components/avatar';
+export { Avatar, AvatarImage, AvatarFallback, AvatarGroup } from './components/avatar';
+export type { AvatarGroupProps } from './components/avatar';
 
 export {
   Select,

@@ -1,8 +1,7 @@
 import * as RadioGroupPrimitive from '@radix-ui/react-radio-group';
-import { Circle } from 'lucide-react';
 import { cn } from '../lib/cn';
 
-/** A group of radio buttons. */
+/** A vertical stack of radio buttons. */
 function RadioGroup({
   className,
   ...props
@@ -10,7 +9,10 @@ function RadioGroup({
   return <RadioGroupPrimitive.Root className={cn('grid gap-2', className)} {...props} />;
 }
 
-/** A single radio button within a radio group. */
+/**
+ * A single radio button. Empty outline in `--input`; when selected, the border
+ * switches to `--brand` and the inner dot fills with `--brand`.
+ */
 function RadioGroupItem({
   className,
   ...props
@@ -18,13 +20,13 @@ function RadioGroupItem({
   return (
     <RadioGroupPrimitive.Item
       className={cn(
-        'aspect-square h-4 w-4 rounded-full border border-primary text-primary shadow focus:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50',
+        'aspect-square h-4 w-4 rounded-full border-[1.5px] border-input bg-background text-brand transition-colors focus:outline-none focus-visible:ring-[3px] focus-visible:ring-ring focus-visible:shadow-[0_0_0_6px_var(--brand-glow)] disabled:cursor-not-allowed disabled:opacity-50 data-[state=checked]:border-brand',
         className,
       )}
       {...props}
     >
       <RadioGroupPrimitive.Indicator className="flex items-center justify-center">
-        <Circle className="h-3.5 w-3.5 fill-primary" />
+        <span className="block h-[7px] w-[7px] rounded-full bg-brand" />
       </RadioGroupPrimitive.Indicator>
     </RadioGroupPrimitive.Item>
   );
