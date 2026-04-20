@@ -174,3 +174,7 @@ export type { CodePanelProps } from './components/code-panel';
 
 export { Diagram, DiagramAccent, DiagramWarm, DiagramDim } from './components/diagram';
 export type { DiagramProps } from './components/diagram';
+
+export { Toaster } from './components/toaster';
+export type { ToasterProps } from './components/toaster';
+export { toast } from 'sonner';
