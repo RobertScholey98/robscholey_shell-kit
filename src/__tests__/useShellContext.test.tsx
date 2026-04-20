@@ -1,13 +1,16 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import { renderHook, act } from '@testing-library/react';
+import type { ReactNode } from 'react';
 import { useShellContext } from '@/useShellContext';
-import { configure, _testResetConfig } from '@/config';
+import { ShellKitProvider } from '@/ShellKitProvider';
 
 const SHELL_ORIGIN = 'https://robscholey.com';
 
+function Wrapper({ children }: { children: ReactNode }) {
+  return <ShellKitProvider config={{ shellOrigin: SHELL_ORIGIN }}>{children}</ShellKitProvider>;
+}
+
 beforeEach(() => {
-  _testResetConfig();
-  configure({ shellOrigin: SHELL_ORIGIN });
   // Simulate being in an iframe
   Object.defineProperty(window, 'top', { value: {}, configurable: true });
   Object.defineProperty(window, 'parent', {
@@ -31,7 +34,7 @@ function dispatchShellMessage(data: Record<string, unknown>) {
 
 describe('useShellContext', () => {
   it('sends request-shell-context on mount when in iframe', () => {
-    renderHook(() => useShellContext());
+    renderHook(() => useShellContext(), { wrapper: Wrapper });
 
     expect(window.parent.postMessage).toHaveBeenCalledWith(
       { type: 'request-shell-context' },
@@ -40,7 +43,7 @@ describe('useShellContext', () => {
   });
 
   it('processes shell-context messages', () => {
-    const { result } = renderHook(() => useShellContext());
+    const { result } = renderHook(() => useShellContext(), { wrapper: Wrapper });
 
     act(() => {
       dispatchShellMessage({
@@ -65,7 +68,7 @@ describe('useShellContext', () => {
   });
 
   it('rejects messages from invalid origins', () => {
-    const { result } = renderHook(() => useShellContext());
+    const { result } = renderHook(() => useShellContext(), { wrapper: Wrapper });
 
     act(() => {
       const event = new MessageEvent('message', {
@@ -89,7 +92,7 @@ describe('useShellContext', () => {
   });
 
   it('updates jwt on jwt-refresh message', () => {
-    const { result } = renderHook(() => useShellContext());
+    const { result } = renderHook(() => useShellContext(), { wrapper: Wrapper });
 
     act(() => {
       dispatchShellMessage({
@@ -112,7 +115,7 @@ describe('useShellContext', () => {
   });
 
   it('clears session on session-ended message', () => {
-    const { result } = renderHook(() => useShellContext());
+    const { result } = renderHook(() => useShellContext(), { wrapper: Wrapper });
 
     act(() => {
       dispatchShellMessage({
@@ -137,7 +140,7 @@ describe('useShellContext', () => {
   });
 
   it('requestJWTRefresh sends postMessage', () => {
-    const { result } = renderHook(() => useShellContext());
+    const { result } = renderHook(() => useShellContext(), { wrapper: Wrapper });
 
     act(() => {
       result.current.requestJWTRefresh();
@@ -151,7 +154,7 @@ describe('useShellContext', () => {
 
   it('calls onNavigateToPath when shell sends navigate-to-path', () => {
     const onNavigate = vi.fn();
-    renderHook(() => useShellContext(onNavigate));
+    renderHook(() => useShellContext(onNavigate), { wrapper: Wrapper });
 
     act(() => {
       dispatchShellMessage({ type: 'navigate-to-path', path: '/projects/456' });
@@ -161,7 +164,7 @@ describe('useShellContext', () => {
   });
 
   it('updates theme on theme-update message', () => {
-    const { result } = renderHook(() => useShellContext());
+    const { result } = renderHook(() => useShellContext(), { wrapper: Wrapper });
 
     expect(result.current.theme).toBe('light');
 
@@ -173,7 +176,7 @@ describe('useShellContext', () => {
   });
 
   it('requestThemeChange sends theme-change postMessage', () => {
-    const { result } = renderHook(() => useShellContext());
+    const { result } = renderHook(() => useShellContext(), { wrapper: Wrapper });
 
     act(() => {
       result.current.requestThemeChange('dark');
@@ -186,7 +189,7 @@ describe('useShellContext', () => {
   });
 
   it('ignores messages that are not valid shell messages', () => {
-    const { result } = renderHook(() => useShellContext());
+    const { result } = renderHook(() => useShellContext(), { wrapper: Wrapper });
 
     act(() => {
       const event = new MessageEvent('message', {

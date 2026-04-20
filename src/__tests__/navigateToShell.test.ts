@@ -1,9 +1,9 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { navigateToShell } from '@/navigateToShell';
-import { configure, _testResetConfig } from '@/config';
+
+const SHELL_ORIGIN = 'https://robscholey.com';
 
 beforeEach(() => {
-  _testResetConfig();
   vi.restoreAllMocks();
 });
 
@@ -16,13 +16,9 @@ describe('navigateToShell', () => {
       configurable: true,
     });
 
-    configure({ shellOrigin: 'https://robscholey.com' });
-    navigateToShell();
+    navigateToShell(SHELL_ORIGIN);
 
-    expect(postMessageSpy).toHaveBeenCalledWith(
-      { type: 'navigate-to-shell' },
-      'https://robscholey.com',
-    );
+    expect(postMessageSpy).toHaveBeenCalledWith({ type: 'navigate-to-shell' }, SHELL_ORIGIN);
 
     // Restore
     Object.defineProperty(window, 'top', { value: window, configurable: true });
@@ -33,7 +29,7 @@ describe('navigateToShell', () => {
     Object.defineProperty(window, 'top', { value: window, configurable: true });
     const postMessageSpy = vi.spyOn(window.parent, 'postMessage');
 
-    navigateToShell();
+    navigateToShell(SHELL_ORIGIN);
 
     expect(postMessageSpy).not.toHaveBeenCalled();
   });

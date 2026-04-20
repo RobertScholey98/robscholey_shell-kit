@@ -1,6 +1,6 @@
 // Configuration
-export { configure, getConfig } from './config';
-export type { ShellKitConfig } from './config';
+export { ShellKitProvider, useShellKitConfig } from './ShellKitProvider';
+export type { ShellKitConfig, ShellKitProviderProps } from './ShellKitProvider';
 
 // Types
 export type {

@@ -1,5 +1,6 @@
 import { Slot } from '@radix-ui/react-slot';
 import { navigateToShell } from './navigateToShell';
+import { useShellKitConfig } from './ShellKitProvider';
 
 /** Props for the {@link ShellBackButton} component. */
 export interface ShellBackButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
@@ -40,6 +41,8 @@ export function ShellBackButton({
   children = '\u2190 Back to robscholey.com',
   ...rest
 }: ShellBackButtonProps): React.ReactElement | null {
+  const { shellOrigin } = useShellKitConfig();
+
   if (!isEmbedded || !showBackButton) return null;
 
   const Component = asChild ? Slot : 'button';
@@ -47,7 +50,7 @@ export function ShellBackButton({
   function handleClick(e: React.MouseEvent<HTMLButtonElement>) {
     onClick?.(e);
     if (!e.defaultPrevented) {
-      navigateToShell();
+      navigateToShell(shellOrigin);
     }
   }
 

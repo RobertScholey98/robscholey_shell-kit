@@ -21,8 +21,9 @@ import {
   useAuthenticatedQuery,
   ShellBackButton,
   ShellQueryProvider,
+  ShellKitProvider,
+  useShellKitConfig,
   navigateToShell,
-  configure,
 } from '@robscholey/shell-kit';
 ```
 
@@ -38,13 +39,23 @@ import { Button, Card } from '@robscholey/shell-kit/ui';
 
 ## Configuration
 
-Call `configure()` once at app startup to set the shell origin (defaults to `https://robscholey.com`):
+Wrap your app in `<ShellKitProvider>` once, near the root, with the shell origin for the current environment:
 
 ```tsx
-import { configure } from '@robscholey/shell-kit';
+import { ShellKitProvider } from '@robscholey/shell-kit';
 
-configure({ shellOrigin: 'http://localhost:3000' }); // for local dev
+export function App({ children }: { children: React.ReactNode }) {
+  return (
+    <ShellKitProvider
+      config={{ shellOrigin: process.env.NEXT_PUBLIC_SHELL_ORIGIN ?? 'http://localhost:3000' }}
+    >
+      {children}
+    </ShellKitProvider>
+  );
+}
 ```
+
+Hooks and components inside the provider read the config from React context. Outside the provider, `useShellKitConfig()` throws — this is a fail-fast signal that the provider is missing rather than a silent default.
 
 ## Hooks
 

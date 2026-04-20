@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
-import { getConfig } from './config';
+import { useShellKitConfig } from './ShellKitProvider';
 import { isInIframe } from './isInIframe';
 import type { ShellUser, ShellTheme, ShellToChildMessage } from './types';
 
@@ -42,11 +42,13 @@ function isShellMessage(data: unknown): data is ShellToChildMessage {
  * Hook that manages communication with the robscholey.com shell via postMessage.
  * Listens for `shell-context`, `jwt-refresh`, `session-ended`, `navigate-to-path`,
  * and `theme-update` messages. Sends `request-shell-context` on mount when running
- * inside an iframe. Validates message origins against the configured shell origin.
+ * inside an iframe. Validates message origins against the shell origin from the
+ * nearest {@link ShellKitProvider}.
  *
  * @param onNavigateToPath - Optional callback invoked when the shell sends a `navigate-to-path` message (browser back/forward).
  */
 export function useShellContext(onNavigateToPath?: NavigateToPathHandler): ShellContextState {
+  const { shellOrigin } = useShellKitConfig();
   const [isEmbedded, setIsEmbedded] = useState(false);
   const [showBackButton, setShowBackButton] = useState(false);
   const [user, setUser] = useState<ShellUser | null>(null);
@@ -64,11 +66,19 @@ export function useShellContext(onNavigateToPath?: NavigateToPathHandler): Shell
     onNavigateToPathRef.current = onNavigateToPath;
   }, [onNavigateToPath]);
 
+  // Keep the shell origin in a ref so handlers don't need to resubscribe when
+  // the provider config changes (which in practice it won't, but we shouldn't
+  // tie message-listener identity to it).
+  const shellOriginRef = useRef(shellOrigin);
+  useEffect(() => {
+    shellOriginRef.current = shellOrigin;
+  }, [shellOrigin]);
+
   useEffect(() => {
     const inIframe = isInIframe();
 
     function handleMessage(event: MessageEvent) {
-      if (event.origin !== getConfig().shellOrigin) return;
+      if (event.origin !== shellOriginRef.current) return;
       if (!isShellMessage(event.data)) return;
 
       const data = event.data;
@@ -105,7 +115,7 @@ export function useShellContext(onNavigateToPath?: NavigateToPathHandler): Shell
     window.addEventListener('message', handleMessage);
 
     if (inIframe) {
-      window.parent.postMessage({ type: 'request-shell-context' }, getConfig().shellOrigin);
+      window.parent.postMessage({ type: 'request-shell-context' }, shellOriginRef.current);
     }
 
     return () => window.removeEventListener('message', handleMessage);
@@ -113,13 +123,16 @@ export function useShellContext(onNavigateToPath?: NavigateToPathHandler): Shell
 
   const requestJWTRefresh = useCallback(() => {
     if (isInIframe()) {
-      window.parent.postMessage({ type: 'request-jwt-refresh' }, getConfig().shellOrigin);
+      window.parent.postMessage({ type: 'request-jwt-refresh' }, shellOriginRef.current);
     }
   }, []);
 
   const requestThemeChange = useCallback((newTheme: ShellTheme) => {
     if (isInIframe()) {
-      window.parent.postMessage({ type: 'theme-change', theme: newTheme }, getConfig().shellOrigin);
+      window.parent.postMessage(
+        { type: 'theme-change', theme: newTheme },
+        shellOriginRef.current,
+      );
     }
   }, []);
 

@@ -1,11 +1,18 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import { render, fireEvent } from '@testing-library/react';
+import type { ReactElement } from 'react';
 import { ShellBackButton } from '@/ShellBackButton';
-import { configure, _testResetConfig } from '@/config';
+import { ShellKitProvider } from '@/ShellKitProvider';
+
+const SHELL_ORIGIN = 'https://robscholey.com';
+
+function renderWithProvider(ui: ReactElement) {
+  return render(
+    <ShellKitProvider config={{ shellOrigin: SHELL_ORIGIN }}>{ui}</ShellKitProvider>,
+  );
+}
 
 beforeEach(() => {
-  _testResetConfig();
-  configure({ shellOrigin: 'https://robscholey.com' });
   Object.defineProperty(window, 'top', { value: {}, configurable: true });
   Object.defineProperty(window, 'parent', {
     value: { postMessage: vi.fn() },
@@ -20,33 +27,41 @@ afterEach(() => {
 
 describe('ShellBackButton', () => {
   it('renders a button when embedded and showBackButton is true', () => {
-    const { getByRole } = render(<ShellBackButton isEmbedded={true} showBackButton={true} />);
+    const { getByRole } = renderWithProvider(
+      <ShellBackButton isEmbedded={true} showBackButton={true} />,
+    );
     expect(getByRole('button')).toBeDefined();
   });
 
   it('renders nothing when not embedded', () => {
-    const { container } = render(<ShellBackButton isEmbedded={false} showBackButton={true} />);
+    const { container } = renderWithProvider(
+      <ShellBackButton isEmbedded={false} showBackButton={true} />,
+    );
     expect(container.innerHTML).toBe('');
   });
 
   it('renders nothing when showBackButton is false', () => {
-    const { container } = render(<ShellBackButton isEmbedded={true} showBackButton={false} />);
+    const { container } = renderWithProvider(
+      <ShellBackButton isEmbedded={true} showBackButton={false} />,
+    );
     expect(container.innerHTML).toBe('');
   });
 
   it('sends navigate-to-shell on click', () => {
-    const { getByRole } = render(<ShellBackButton isEmbedded={true} showBackButton={true} />);
+    const { getByRole } = renderWithProvider(
+      <ShellBackButton isEmbedded={true} showBackButton={true} />,
+    );
 
     fireEvent.click(getByRole('button'));
 
     expect(window.parent.postMessage).toHaveBeenCalledWith(
       { type: 'navigate-to-shell' },
-      'https://robscholey.com',
+      SHELL_ORIGIN,
     );
   });
 
   it('renders custom children', () => {
-    const { getByText } = render(
+    const { getByText } = renderWithProvider(
       <ShellBackButton isEmbedded={true} showBackButton={true}>
         Go back
       </ShellBackButton>,
@@ -55,7 +70,7 @@ describe('ShellBackButton', () => {
   });
 
   it('renders child element when asChild is true', () => {
-    const { getByRole } = render(
+    const { getByRole } = renderWithProvider(
       <ShellBackButton isEmbedded={true} showBackButton={true} asChild>
         <a href="#">Back</a>
       </ShellBackButton>,
@@ -66,7 +81,7 @@ describe('ShellBackButton', () => {
   });
 
   it('sends navigate-to-shell when asChild element is clicked', () => {
-    const { getByRole } = render(
+    const { getByRole } = renderWithProvider(
       <ShellBackButton isEmbedded={true} showBackButton={true} asChild>
         <a href="#">Back</a>
       </ShellBackButton>,
@@ -76,13 +91,13 @@ describe('ShellBackButton', () => {
 
     expect(window.parent.postMessage).toHaveBeenCalledWith(
       { type: 'navigate-to-shell' },
-      'https://robscholey.com',
+      SHELL_ORIGIN,
     );
   });
 
   it('calls custom onClick handler alongside navigation', () => {
     const customOnClick = vi.fn();
-    const { getByRole } = render(
+    const { getByRole } = renderWithProvider(
       <ShellBackButton isEmbedded={true} showBackButton={true} onClick={customOnClick} />,
     );
 
@@ -91,13 +106,13 @@ describe('ShellBackButton', () => {
     expect(customOnClick).toHaveBeenCalled();
     expect(window.parent.postMessage).toHaveBeenCalledWith(
       { type: 'navigate-to-shell' },
-      'https://robscholey.com',
+      SHELL_ORIGIN,
     );
   });
 
   it('does not navigate if onClick calls preventDefault', () => {
     const customOnClick = vi.fn((e: React.MouseEvent) => e.preventDefault());
-    const { getByRole } = render(
+    const { getByRole } = renderWithProvider(
       <ShellBackButton isEmbedded={true} showBackButton={true} onClick={customOnClick} />,
     );
 
