@@ -4,7 +4,7 @@
   "description": "Shared postMessage protocol, React hooks, and TanStack Query integration for robscholey.com sub-apps",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/RobertScholey98/robscholey_shell-kit.git"
+    "url": "git+https://github.com/robscholey/robscholey_shell-kit.git"
   },
   "type": "module",
   "main": "./dist/index.js",
