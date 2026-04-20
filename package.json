@@ -2,6 +2,10 @@
   "name": "@robscholey/shell-kit",
   "version": "0.1.0",
   "description": "Shared postMessage protocol, React hooks, and TanStack Query integration for robscholey.com sub-apps",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/RobertScholey98/robscholey_shell-kit.git"
+  },
   "type": "module",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
