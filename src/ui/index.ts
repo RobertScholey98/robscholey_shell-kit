@@ -178,3 +178,28 @@ export type { DiagramProps } from './components/diagram';
 export { Toaster } from './components/toaster';
 export type { ToasterProps } from './components/toaster';
 export { toast } from 'sonner';
+
+// Selector primitives — used by the shell's app-launcher page.
+export { AppCard } from './components/app-card';
+export type { AppCardProps } from './components/app-card';
+
+export { AppGrid } from './components/app-grid';
+export type { AppGridProps } from './components/app-grid';
+
+export { AsciiPanel } from './components/ascii-panel';
+export type { AsciiPanelProps } from './components/ascii-panel';
+
+export { BarGrid } from './components/bar-grid';
+export type { BarGridProps } from './components/bar-grid';
+
+export { Changelog, ChangelogItem } from './components/changelog';
+export type { ChangelogProps, ChangelogItemProps } from './components/changelog';
+
+export { MetaGrid, MetaRow } from './components/meta-grid';
+export type { MetaGridProps, MetaRowProps } from './components/meta-grid';
+
+export { MonoMark } from './components/mono-mark';
+export type { MonoMarkProps, MonoMarkSize } from './components/mono-mark';
+
+export { StatusDot, statusDotVariants } from './components/status-dot';
+export type { StatusDotProps, StatusVariant } from './components/status-dot';
