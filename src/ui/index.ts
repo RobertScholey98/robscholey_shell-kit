@@ -203,3 +203,7 @@ export type { MonoMarkProps, MonoMarkSize } from './components/mono-mark';
 
 export { StatusDot, statusDotVariants } from './components/status-dot';
 export type { StatusDotProps, StatusVariant } from './components/status-dot';
+
+// Sub-app chrome primitives — bottom nav, FAB, chips.
+export { BottomNav, BottomNavItem } from './components/bottom-nav';
+export type { BottomNavProps, BottomNavItemProps } from './components/bottom-nav';
