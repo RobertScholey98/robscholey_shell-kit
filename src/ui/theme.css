@@ -12,6 +12,13 @@
  * brand triad is re-stated inside each `[data-theme="light"][data-accent=…]`
  * combo because light mode pulls brand from a different part of the ramp.
  *
+ * Accent tokens are scoped to `[data-accent="X"]` (no `:root` anchor) so a
+ * descendant element — e.g. `<AppCard data-accent="fsgb">` inside a teal
+ * shell — can re-scope the trio to itself and its subtree. The light-mode
+ * accent rules pair a same-element compound selector with a descendant
+ * selector so both `<html data-theme="light" data-accent="teal">` and the
+ * `<html data-theme="light"> … <div data-accent="teal">` pattern work.
+ *
  * Surfaces are organised as a five-tier ramp — `--background`, `--bg-soft`,
  * `--card`, `--card-2`, `--card-hi` — plus `--popover` aliasing `--card`.
  * The brand triad is `--brand` (bright / text + highlight), `--brand-dim`
@@ -90,44 +97,49 @@
 /* ---------------- ACCENT VARIANTS (dark mode) ---------------- */
 /* Teal is the default and is already set on :root. The explicit
    [data-accent="teal"] block is redundant by value but kept for
-   documentation / symmetry with the other accents. */
-:root[data-accent='teal'] {
+   documentation / symmetry with the other accents.
+
+   Selectors are intentionally un-anchored (no `:root` prefix) so the
+   accent token trio can be re-scoped on any descendant — e.g. an
+   <AppCard data-accent="fsgb"> inside a teal page renders its own
+   brand palette for the card and its children. */
+[data-accent='teal'] {
   --primary: #1a4a45; --primary-foreground: #5eead4;
   --accent: #1a4a45;  --accent-foreground: #5eead4;
   --brand: #5eead4; --brand-dim: #2e8b7d; --brand-deep: #1a4a45;
   --ring: #5eead4; --brand-glow: rgba(94, 234, 212, 0.14);
 }
-:root[data-accent='warm'] {
+[data-accent='warm'] {
   --primary: #3a2318; --primary-foreground: #f4b393;
   --accent: #3a2318;  --accent-foreground: #f4b393;
   --brand: #f4b393; --brand-dim: #a56a4b; --brand-deep: #3a2318;
   --ring: #f4b393; --brand-glow: rgba(244, 179, 147, 0.14);
 }
-:root[data-accent='mono'] {
+[data-accent='mono'] {
   --primary: #2a313a; --primary-foreground: #e6edf3;
   --accent: #2a313a;  --accent-foreground: #e6edf3;
   --brand: #e6edf3; --brand-dim: #6e7681; --brand-deep: #2a313a;
   --ring: #e6edf3; --brand-glow: rgba(230, 237, 243, 0.07);
 }
-:root[data-accent='rose'] {
+[data-accent='rose'] {
   --primary: #3f1a2a; --primary-foreground: #f0a5b9;
   --accent: #3f1a2a;  --accent-foreground: #f0a5b9;
   --brand: #f0a5b9; --brand-dim: #a04c6a; --brand-deep: #3f1a2a;
   --ring: #f0a5b9; --brand-glow: rgba(240, 165, 185, 0.14);
 }
-:root[data-accent='indigo'] {
+[data-accent='indigo'] {
   --primary: #1e2448; --primary-foreground: #a5b4fc;
   --accent: #1e2448;  --accent-foreground: #a5b4fc;
   --brand: #a5b4fc; --brand-dim: #5b6cc3; --brand-deep: #1e2448;
   --ring: #a5b4fc; --brand-glow: rgba(165, 180, 252, 0.14);
 }
-:root[data-accent='betway'] {
+[data-accent='betway'] {
   --primary: #153b1b; --primary-foreground: #4ade80;
   --accent: #153b1b;  --accent-foreground: #4ade80;
   --brand: #4ade80; --brand-dim: #22a54a; --brand-deep: #153b1b;
   --ring: #4ade80; --brand-glow: rgba(74, 222, 128, 0.14);
 }
-:root[data-accent='fsgb'] {
+[data-accent='fsgb'] {
   --primary: #2a1c47; --primary-foreground: #b8a1e8;
   --accent: #2a1c47;  --accent-foreground: #b8a1e8;
   --brand: #b8a1e8; --brand-dim: #7a5cb8; --brand-deep: #2a1c47;
@@ -154,43 +166,57 @@
   --shadow-sm: 0 1px 2px rgba(15, 20, 32, 0.04);
   --shadow:    0 1px 2px rgba(15, 20, 32, 0.04), 0 12px 32px -16px rgba(15, 20, 32, 0.12);
 }
-:root[data-theme='light'][data-accent='teal'] {
+/* Light-mode accent overrides. Two selectors per accent so the trio applies
+   whether `data-theme` and `data-accent` live on the same element (the
+   common `<html data-theme="light" data-accent="teal">` wiring from
+   ShellKitProvider) or on separate elements — `<html data-theme="light">` with
+   a descendant `<AppCard data-accent="fsgb">`. The descendant combinator on
+   its own wouldn't match the same-element case, so the compound selector
+   is retained alongside it. */
+[data-theme='light'][data-accent='teal'],
+[data-theme='light'] [data-accent='teal'] {
   --primary: #ccfbf1; --primary-foreground: #0d4844;
   --accent: #ccfbf1;  --accent-foreground: #0d4844;
   --brand: #0d9488; --brand-dim: #14b8a6; --brand-deep: #ccfbf1;
   --ring: #0d9488; --brand-glow: rgba(13, 148, 136, 0.10);
 }
-:root[data-theme='light'][data-accent='warm'] {
+[data-theme='light'][data-accent='warm'],
+[data-theme='light'] [data-accent='warm'] {
   --primary: #fed7aa; --primary-foreground: #7c2d12;
   --accent: #fed7aa;  --accent-foreground: #7c2d12;
   --brand: #c2410c; --brand-dim: #ea580c; --brand-deep: #fed7aa;
   --ring: #c2410c; --brand-glow: rgba(194, 65, 12, 0.10);
 }
-:root[data-theme='light'][data-accent='mono'] {
+[data-theme='light'][data-accent='mono'],
+[data-theme='light'] [data-accent='mono'] {
   --primary: #e8ecf1; --primary-foreground: #131720;
   --accent: #e8ecf1;  --accent-foreground: #131720;
   --brand: #131720; --brand-dim: #4a5260; --brand-deep: #e8ecf1;
   --ring: #131720; --brand-glow: rgba(19, 23, 32, 0.06);
 }
-:root[data-theme='light'][data-accent='rose'] {
+[data-theme='light'][data-accent='rose'],
+[data-theme='light'] [data-accent='rose'] {
   --primary: #fecdd3; --primary-foreground: #881337;
   --accent: #fecdd3;  --accent-foreground: #881337;
   --brand: #be185d; --brand-dim: #e11d48; --brand-deep: #fecdd3;
   --ring: #be185d; --brand-glow: rgba(190, 24, 93, 0.10);
 }
-:root[data-theme='light'][data-accent='indigo'] {
+[data-theme='light'][data-accent='indigo'],
+[data-theme='light'] [data-accent='indigo'] {
   --primary: #dbeafe; --primary-foreground: #1e2a78;
   --accent: #dbeafe;  --accent-foreground: #1e2a78;
   --brand: #3730a3; --brand-dim: #6366f1; --brand-deep: #dbeafe;
   --ring: #3730a3; --brand-glow: rgba(55, 48, 163, 0.10);
 }
-:root[data-theme='light'][data-accent='betway'] {
+[data-theme='light'][data-accent='betway'],
+[data-theme='light'] [data-accent='betway'] {
   --primary: #d6f5de; --primary-foreground: #0c3a1a;
   --accent: #d6f5de;  --accent-foreground: #0c3a1a;
   --brand: #128a2f; --brand-dim: #22a54a; --brand-deep: #d6f5de;
   --ring: #128a2f; --brand-glow: rgba(18, 138, 47, 0.10);
 }
-:root[data-theme='light'][data-accent='fsgb'] {
+[data-theme='light'][data-accent='fsgb'],
+[data-theme='light'] [data-accent='fsgb'] {
   --primary: #e4dcf5; --primary-foreground: #2a1c47;
   --accent: #e4dcf5;  --accent-foreground: #2a1c47;
   --brand: #5e2d90; --brand-dim: #7a5cb8; --brand-deep: #e4dcf5;
