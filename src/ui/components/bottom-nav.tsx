@@ -41,7 +41,13 @@ function BottomNav({ className, children, ...props }: BottomNavProps): ReactElem
       )}
       {...props}
     >
-      <div className="mx-auto flex max-w-[900px] gap-1 px-2 py-2">{children}</div>
+      {/* Grid with `auto-cols-fr` flowing along the column axis gives every
+          child an exactly-equal column width regardless of label length —
+          flex-1 distributes free space but lets a longer label stretch its
+          column wider, breaking visual rhythm across uneven labels. */}
+      <div className="mx-auto grid max-w-[900px] grid-flow-col auto-cols-fr gap-1 px-2 py-2">
+        {children}
+      </div>
     </nav>
   );
 }
@@ -99,7 +105,7 @@ function BottomNavItem({
       data-active={active || undefined}
       aria-current={active ? 'page' : undefined}
       className={cn(
-        'relative flex flex-1 cursor-pointer flex-col items-center gap-0.5 rounded-md border-0 bg-transparent px-1 py-1.5 font-mono text-[0.66rem] text-text-dim transition-colors hover:text-text-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring',
+        'relative flex cursor-pointer flex-col items-center gap-0.5 rounded-md border-0 bg-transparent px-1 py-1.5 font-mono text-[0.66rem] text-text-dim transition-colors hover:text-text-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring',
         active && 'text-accent hover:text-accent',
         className,
       )}

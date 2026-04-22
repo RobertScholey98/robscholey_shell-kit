@@ -9,7 +9,7 @@ function AccordionItem({
   className,
   ...props
 }: React.ComponentPropsWithRef<typeof AccordionPrimitive.Item>) {
-  return <AccordionPrimitive.Item className={cn('border-b', className)} {...props} />;
+  return <AccordionPrimitive.Item className={cn('border-b border-border', className)} {...props} />;
 }
 
 /** The clickable header of an accordion item. */

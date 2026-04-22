@@ -11,7 +11,7 @@ function Table({ className, ...props }: React.HTMLAttributes<HTMLTableElement>) 
 
 /** The header section of a table. */
 function TableHeader({ className, ...props }: React.HTMLAttributes<HTMLTableSectionElement>) {
-  return <thead className={cn('[&_tr]:border-b', className)} {...props} />;
+  return <thead className={cn('[&_tr]:border-b [&_tr]:border-border', className)} {...props} />;
 }
 
 /** The body section of a table. */
@@ -23,7 +23,7 @@ function TableBody({ className, ...props }: React.HTMLAttributes<HTMLTableSectio
 function TableFooter({ className, ...props }: React.HTMLAttributes<HTMLTableSectionElement>) {
   return (
     <tfoot
-      className={cn('border-t bg-bg-soft/50 font-medium [&>tr]:last:border-b-0', className)}
+      className={cn('border-t border-border bg-bg-soft/50 font-medium [&>tr]:last:border-b-0', className)}
       {...props}
     />
   );
@@ -34,7 +34,7 @@ function TableRow({ className, ...props }: React.HTMLAttributes<HTMLTableRowElem
   return (
     <tr
       className={cn(
-        'border-b transition-colors hover:bg-bg-soft/50 data-[state=selected]:bg-bg-soft',
+        'border-b border-border transition-colors hover:bg-bg-soft/50 data-[state=selected]:bg-bg-soft',
         className,
       )}
       {...props}
