@@ -8,9 +8,10 @@ import { cn } from '../lib/cn';
  *   letter-spacing and moderate weight (600). The display variant leads
  *   landing pages; `h1` carries section hero copy; `h2` / `h3` chunk content.
  * - `body` and `small` are the two paragraph tiers.
- * - `mono-label` is the eyebrow / section-label treatment — JetBrains Mono,
- *   uppercase, wide tracking, brand-coloured. Also replaces the old `label`
- *   variant at call sites.
+ * - `mono-label` is the eyebrow / section-label / field-label treatment —
+ *   JetBrains Mono, uppercase, wide tracking. Defaults to `--accent` (the
+ *   eyebrow look from the design); pass `tone="muted"` for the field-label
+ *   role (`--text-muted`) or `tone="dim"` for table meta (`--text-dim`).
  * - `code` is inline monospace at body scale.
  *
  * `withAccent` adds a 32 px × 1 px leading bar in `--accent` above heading
@@ -28,12 +29,11 @@ const typographyVariants = cva('m-0', {
       display:
         'text-[2.9rem] font-semibold tracking-[-0.028em] leading-[1.08]',
       h1: 'text-[2.6rem] font-semibold tracking-[-0.022em] leading-[1.1]',
-      h2: 'text-[1.4rem] font-semibold leading-tight',
-      h3: 'text-[1.05rem] font-semibold leading-snug',
+      h2: 'text-[1.4rem] font-semibold tracking-[-0.015em] leading-[1.2]',
+      h3: 'text-[1.05rem] font-semibold tracking-[-0.01em] leading-[1.2]',
       body: 'text-base leading-[1.65]',
       small: 'text-[0.88rem] text-text-muted',
-      'mono-label':
-        'font-mono text-[0.72rem] uppercase tracking-[0.14em] text-accent',
+      'mono-label': 'font-mono text-[0.72rem] uppercase tracking-[0.14em]',
       code: 'font-mono text-[0.82rem]',
     },
     align: {
@@ -41,14 +41,31 @@ const typographyVariants = cva('m-0', {
       center: 'text-center',
       right: 'text-right',
     },
+    // Tone is only applied to `mono-label`; for every other variant the colour
+    // is owned by the variant itself (or inherited). cva can't express "only
+    // when variant === mono-label" without compoundVariants, so the variant
+    // class string for mono-label intentionally omits a colour and the tone
+    // compound below paints it. Default tone is `accent` to match the design's
+    // eyebrow / section-label treatment.
+    tone: {
+      accent: '',
+      muted: '',
+      dim: '',
+    },
     withAccent: {
       true: 'relative pt-[0.7em] before:content-[""] before:absolute before:left-0 before:top-0 before:w-8 before:h-px before:bg-accent',
       false: '',
     },
   },
+  compoundVariants: [
+    { variant: 'mono-label', tone: 'accent', className: 'text-accent' },
+    { variant: 'mono-label', tone: 'muted', className: 'text-text-muted' },
+    { variant: 'mono-label', tone: 'dim', className: 'text-text-dim' },
+  ],
   defaultVariants: {
     variant: 'body',
     align: 'left',
+    tone: 'accent',
     withAccent: false,
   },
 });
@@ -112,6 +129,7 @@ export interface TypographyProps
 export function Typography({
   variant,
   align,
+  tone,
   withAccent,
   as,
   className,
@@ -123,7 +141,7 @@ export function Typography({
   return (
     <Component
       className={cn(
-        typographyVariants({ variant: resolvedVariant, align, withAccent: accent }),
+        typographyVariants({ variant: resolvedVariant, align, tone, withAccent: accent }),
         className,
       )}
       {...props}

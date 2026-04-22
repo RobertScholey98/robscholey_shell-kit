@@ -6,7 +6,7 @@ function RadioGroup({
   className,
   ...props
 }: React.ComponentPropsWithRef<typeof RadioGroupPrimitive.Root>) {
-  return <RadioGroupPrimitive.Root className={cn('grid gap-2', className)} {...props} />;
+  return <RadioGroupPrimitive.Root className={cn('grid gap-2.5', className)} {...props} />;
 }
 
 /**
@@ -20,7 +20,7 @@ function RadioGroupItem({
   return (
     <RadioGroupPrimitive.Item
       className={cn(
-        'aspect-square h-4 w-4 rounded-full border-[1.5px] border-input bg-bg text-accent transition-colors focus:outline-none focus-visible:ring-[3px] focus-visible:ring-ring focus-visible:shadow-[0_0_0_6px_var(--accent-glow)] disabled:cursor-not-allowed disabled:opacity-50 data-[state=checked]:border-accent',
+        'aspect-square h-4 w-4 rounded-full border-[1.5px] border-input bg-bg transition-colors focus:outline-none focus-visible:ring-[3px] focus-visible:ring-ring focus-visible:shadow-[0_0_0_6px_var(--accent-glow)] disabled:cursor-not-allowed disabled:opacity-50 data-[state=checked]:border-accent',
         className,
       )}
       {...props}

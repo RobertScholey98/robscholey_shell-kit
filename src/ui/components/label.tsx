@@ -2,16 +2,36 @@ import * as LabelPrimitive from '@radix-ui/react-label';
 import { cva, type VariantProps } from 'class-variance-authority';
 import { cn } from '../lib/cn';
 
+/**
+ * Two label patterns the design uses:
+ *
+ * - `inline` — sans, 0.92rem, default colour. Wraps a checkbox/radio/switch
+ *   so the row reads as a single label-control unit. Default.
+ * - `mono` — JetBrains Mono, 0.72rem, uppercase, 0.1em tracking,
+ *   `--text-muted`. The dominant form-field-label treatment in the design
+ *   (`design-system.css` `.field label`).
+ */
 const labelVariants = cva(
-  'text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70',
+  'peer-disabled:cursor-not-allowed peer-disabled:opacity-70',
+  {
+    variants: {
+      variant: {
+        inline: 'text-[0.92rem]',
+        mono: 'font-mono text-[0.72rem] uppercase tracking-[0.1em] text-text-muted',
+      },
+    },
+    defaultVariants: { variant: 'inline' },
+  },
 );
 
-/** A styled label component built on Radix Label. */
-function Label({
-  className,
-  ...props
-}: React.ComponentPropsWithRef<typeof LabelPrimitive.Root> & VariantProps<typeof labelVariants>) {
-  return <LabelPrimitive.Root className={cn(labelVariants(), className)} {...props} />;
+/** Props for the {@link Label} component. */
+export interface LabelProps
+  extends React.ComponentPropsWithRef<typeof LabelPrimitive.Root>,
+    VariantProps<typeof labelVariants> {}
+
+/** A styled label built on Radix Label. Defaults to the inline checkbox/radio look. */
+function Label({ className, variant, ...props }: LabelProps) {
+  return <LabelPrimitive.Root className={cn(labelVariants({ variant }), className)} {...props} />;
 }
 
-export { Label };
+export { Label, labelVariants };

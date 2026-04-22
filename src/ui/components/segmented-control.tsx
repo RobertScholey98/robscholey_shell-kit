@@ -59,7 +59,10 @@ function SegmentedControl({
         if (v && onValueChange) onValueChange(v);
       }}
       className={cn(
-        'inline-flex items-center gap-2 rounded-full border border-border bg-bg p-1',
+        // 3 px shell padding + zero gap mirrors the design's tabs-list /
+        // mode-seg pattern — items sit shoulder-to-shoulder and the active
+        // pill stands proud via its inset 1 px ring.
+        'inline-flex items-center gap-0 rounded-full border border-border bg-bg p-[3px]',
         className,
       )}
       {...props}
