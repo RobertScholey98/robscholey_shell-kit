@@ -2,11 +2,11 @@ import { cva, type VariantProps } from 'class-variance-authority';
 import { cn } from '../lib/cn';
 
 /**
- * Alert container styling — a `--card` surface with a 3 px tinted left border.
+ * Alert container styling — a `--surface` surface with a 3 px tinted left border.
  * The tint drives off the variant and is re-used by the companion `AlertIcon`.
  */
 const alertVariants = cva(
-  'relative flex w-full items-start gap-[14px] rounded-md border border-border border-l-[3px] bg-card px-[18px] py-[14px] text-sm',
+  'relative flex w-full items-start gap-[14px] rounded-md border border-border border-l-[3px] bg-surface px-[18px] py-[14px] text-sm',
   {
     variants: {
       variant: {
@@ -26,9 +26,9 @@ const alertIconVariants = cva(
   {
     variants: {
       variant: {
-        default: 'border-brand text-brand',
+        default: 'border-accent text-accent',
         warm: 'border-warm text-warm',
-        destructive: 'border-destructive text-destructive',
+        destructive: 'border-danger text-danger',
       },
     },
     defaultVariants: {
@@ -75,7 +75,7 @@ function AlertTitle({ className, ...props }: React.HTMLAttributes<HTMLHeadingEle
 /** The muted description body of an alert. */
 function AlertDescription({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) {
   return (
-    <div className={cn('text-[0.88rem] text-muted-foreground [&_p]:leading-relaxed', className)} {...props} />
+    <div className={cn('text-[0.88rem] text-text-muted [&_p]:leading-relaxed', className)} {...props} />
   );
 }
 

@@ -67,7 +67,7 @@ describe('BottomNavItem', () => {
     const button = container.querySelector('button');
     expect(button?.getAttribute('aria-current')).toBe('page');
     expect(button?.getAttribute('data-active')).toBe('true');
-    expect(button?.className).toContain('text-brand');
+    expect(button?.className).toContain('text-accent');
   });
 
   it('omits aria-current when not active', () => {
@@ -125,8 +125,8 @@ describe('FAB', () => {
     const { getByRole } = render(<FAB aria-label="New">+</FAB>);
     const button = getByRole('button');
     expect(button.className).toContain('fixed');
-    expect(button.className).toContain('bg-brand');
-    expect(button.className).toContain('text-brand-deep');
+    expect(button.className).toContain('bg-accent');
+    expect(button.className).toContain('text-accent-deep');
   });
 
   it('forwards arbitrary HTML attributes', () => {
@@ -207,7 +207,7 @@ describe('Chip', () => {
     const btn = getByRole('button');
     expect(btn.getAttribute('data-active')).toBe('true');
     expect(btn.getAttribute('aria-pressed')).toBe('true');
-    expect(btn.className).toContain('text-brand');
+    expect(btn.className).toContain('text-accent');
   });
 
   it('sets aria-pressed="false" when not active', () => {
@@ -242,7 +242,7 @@ describe('Avatar presence', () => {
     );
     const dot = container.querySelector('[data-presence="live"]');
     expect(dot).not.toBeNull();
-    expect(dot?.className).toContain('bg-brand');
+    expect(dot?.className).toContain('bg-accent');
     expect(dot?.className).toContain('shadow-');
   });
 
@@ -263,6 +263,6 @@ describe('Avatar presence', () => {
       </Avatar>,
     );
     const dot = container.querySelector('[data-presence="off"]');
-    expect(dot?.className).toContain('bg-subtle-foreground');
+    expect(dot?.className).toContain('bg-text-dim');
   });
 });

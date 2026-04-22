@@ -138,7 +138,7 @@ function Section({
 }) {
   return (
     <section className="border-b border-border px-8 py-10">
-      <h2 className="mb-6 font-mono text-[0.78rem] uppercase tracking-[0.14em] text-brand">
+      <h2 className="mb-6 font-mono text-[0.78rem] uppercase tracking-[0.14em] text-accent">
         {title}
       </h2>
       {children}
@@ -150,7 +150,7 @@ function Section({
 function Row({ label, children }: { label: string; children: React.ReactNode }) {
   return (
     <div className="mb-6 grid grid-cols-1 gap-4 sm:grid-cols-[180px_1fr]">
-      <div className="font-mono text-[0.72rem] uppercase tracking-[0.1em] text-subtle-foreground">
+      <div className="font-mono text-[0.72rem] uppercase tracking-[0.1em] text-text-dim">
         {label}
       </div>
       <div className="flex flex-wrap items-center gap-3">{children}</div>
@@ -165,12 +165,12 @@ function Row({ label, children }: { label: string; children: React.ReactNode }) 
  */
 export const AllComponents: Story = {
   render: () => (
-    <div className="min-h-screen bg-background text-foreground">
+    <div className="min-h-screen bg-bg text-text">
       <header className="border-b border-border px-8 py-6">
         <Typography variant="display" className="text-[1.6rem]">
           shell-kit · component library
         </Typography>
-        <Typography variant="small" className="text-muted-foreground">
+        <Typography variant="small" className="text-text-muted">
           Every public component, every variant. Switch theme + accent in the toolbar above.
         </Typography>
       </header>

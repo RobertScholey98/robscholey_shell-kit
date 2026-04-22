@@ -11,7 +11,7 @@ function RadioGroup({
 
 /**
  * A single radio button. Empty outline in `--input`; when selected, the border
- * switches to `--brand` and the inner dot fills with `--brand`.
+ * switches to `--accent` and the inner dot fills with `--accent`.
  */
 function RadioGroupItem({
   className,
@@ -20,13 +20,13 @@ function RadioGroupItem({
   return (
     <RadioGroupPrimitive.Item
       className={cn(
-        'aspect-square h-4 w-4 rounded-full border-[1.5px] border-input bg-background text-brand transition-colors focus:outline-none focus-visible:ring-[3px] focus-visible:ring-ring focus-visible:shadow-[0_0_0_6px_var(--brand-glow)] disabled:cursor-not-allowed disabled:opacity-50 data-[state=checked]:border-brand',
+        'aspect-square h-4 w-4 rounded-full border-[1.5px] border-input bg-bg text-accent transition-colors focus:outline-none focus-visible:ring-[3px] focus-visible:ring-ring focus-visible:shadow-[0_0_0_6px_var(--accent-glow)] disabled:cursor-not-allowed disabled:opacity-50 data-[state=checked]:border-accent',
         className,
       )}
       {...props}
     >
       <RadioGroupPrimitive.Indicator className="flex items-center justify-center">
-        <span className="block h-[7px] w-[7px] rounded-full bg-brand" />
+        <span className="block h-[7px] w-[7px] rounded-full bg-accent" />
       </RadioGroupPrimitive.Indicator>
     </RadioGroupPrimitive.Item>
   );

@@ -13,16 +13,16 @@ export type StatusVariant = 'live' | 'dev' | 'soon' | 'paused';
  * they're visual cues that the target isn't launchable.
  *
  * The warm halo on `dev` uses `color-mix` against the warm token rather than
- * the usual `--brand-glow`, because `--brand-glow` already follows the active
+ * the usual `--accent-glow`, because `--accent-glow` already follows the active
  * accent and `dev` should read "in-progress" regardless of which accent the
  * parent card is using.
  */
 const statusDotVariants = cva('inline-block h-2 w-2 rounded-full shrink-0', {
   variants: {
     status: {
-      live: 'bg-brand shadow-[0_0_0_3px_var(--brand-glow)]',
+      live: 'bg-accent shadow-[0_0_0_3px_var(--accent-glow)]',
       dev: 'bg-warm shadow-[0_0_0_3px_color-mix(in_srgb,var(--warm)_25%,transparent)]',
-      soon: 'bg-subtle-foreground',
+      soon: 'bg-text-dim',
       paused: 'bg-warm-dim',
     },
   },

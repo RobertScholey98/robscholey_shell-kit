@@ -5,34 +5,34 @@ import { cn } from '../lib/cn';
 /**
  * Button styling ramp aligned with the rs. design-system button scale.
  *
- * - `brand` is the loudest call-to-action: solid `--brand` fill with
- *   `--background` text for max contrast. Hover dims via filter brightness.
+ * - `brand` is the loudest call-to-action: solid `--accent` fill with
+ *   `--bg` text for max contrast. Hover dims via filter brightness.
  *   Use sparingly (one per view).
- * - `primary` is the default tinted CTA: dark `--primary` fill with bright
- *   `--primary-foreground` text and a `--brand-dim` border that lightens to
- *   `--brand` on hover.
- * - `secondary` is the workhorse bordered button: `--card` surface with an
- *   `--input` border that warms to `--brand-dim` on hover.
+ * - `primary` is the default tinted CTA: dark `--accent-deep` fill with bright
+ *   `--accent` text and a `--accent-dim` border that lightens to
+ *   `--accent` on hover.
+ * - `secondary` is the workhorse bordered button: `--surface` surface with an
+ *   `--input` border that warms to `--accent-dim` on hover.
  * - `ghost` is borderless and transparent until hover, when it picks up
- *   `--card-2` background and a quiet `--border` outline.
+ *   `--surface-2` background and a quiet `--border` outline.
  * - `destructive` stays red for irreversible actions; hover dims via filter.
  *
  * Every variant gets the same hover lift (-1px translate) and focus
- * affordance (3 px `--ring` outline + `--brand-glow` halo), so the
+ * affordance (3 px `--ring` outline + `--accent-glow` halo), so the
  * interaction language stays consistent as the accent rotates.
  */
 const buttonVariants = cva(
-  'inline-flex cursor-pointer items-center justify-center gap-2 whitespace-nowrap rounded-md border text-sm font-medium transition-[color,background-color,border-color,transform,filter,box-shadow] duration-200 ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-px motion-reduce:hover:translate-y-0 focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-ring focus-visible:shadow-[0_0_0_6px_var(--brand-glow)] disabled:pointer-events-none disabled:opacity-50 disabled:hover:translate-y-0 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0',
+  'inline-flex cursor-pointer items-center justify-center gap-2 whitespace-nowrap rounded-md border text-sm font-medium transition-[color,background-color,border-color,transform,filter,box-shadow] duration-200 ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-px motion-reduce:hover:translate-y-0 focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-ring focus-visible:shadow-[0_0_0_6px_var(--accent-glow)] disabled:pointer-events-none disabled:opacity-50 disabled:hover:translate-y-0 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0',
   {
     variants: {
       variant: {
-        brand: 'border-brand bg-brand text-background hover:brightness-[0.92]',
-        primary: 'border-brand-dim bg-primary text-primary-foreground hover:border-brand',
-        secondary: 'border-input bg-card text-foreground hover:border-brand-dim',
+        brand: 'border-accent bg-accent text-bg hover:brightness-[0.92]',
+        primary: 'border-accent-dim bg-accent-deep text-accent hover:border-accent',
+        secondary: 'border-input bg-surface text-text hover:border-accent-dim',
         ghost:
-          'border-transparent bg-transparent text-foreground hover:border-border hover:bg-card-2',
+          'border-transparent bg-transparent text-text hover:border-border hover:bg-surface-2',
         destructive:
-          'border-destructive bg-destructive text-destructive-foreground hover:brightness-[0.95]',
+          'border-danger bg-danger text-text hover:brightness-[0.95]',
       },
       size: {
         // 36 px compact — dense toolbars and inline actions.

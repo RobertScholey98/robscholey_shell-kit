@@ -19,7 +19,7 @@ const themeAccentDecorator: Decorator = (Story, context) => {
 const preview: Preview = {
   parameters: {
     // Storybook's default checker-pattern background fights the design's
-    // tokenised surfaces. Disable in favour of the page-level `--background`.
+    // tokenised surfaces. Disable in favour of the page-level `--bg`.
     backgrounds: { disable: true },
     layout: 'centered',
     controls: {

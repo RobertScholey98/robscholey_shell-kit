@@ -12,13 +12,13 @@ describe('Tag', () => {
     const { getByText } = render(<Tag>ts</Tag>);
     const el = getByText('ts');
     expect(el.tagName).toBe('SPAN');
-    expect(el.className).toContain('bg-card-2');
-    expect(el.className).toContain('text-muted-foreground');
+    expect(el.className).toContain('bg-surface-2');
+    expect(el.className).toContain('text-text-muted');
   });
 
   it('applies accent variant classes', () => {
     const { getByText } = render(<Tag variant="accent">react</Tag>);
-    expect(getByText('react').className).toContain('text-brand');
+    expect(getByText('react').className).toContain('text-accent');
   });
 
   it('applies warm variant classes', () => {
@@ -44,7 +44,7 @@ describe('SessionPill', () => {
     const dot = container.querySelector('[data-status]');
     expect(dot).not.toBeNull();
     expect(dot?.getAttribute('data-status')).toBe('default');
-    expect(dot?.className).toContain('bg-brand');
+    expect(dot?.className).toContain('bg-accent');
   });
 
   it('renders the paused status with a warm dot', () => {
@@ -58,7 +58,7 @@ describe('SessionPill', () => {
     const { container } = render(<SessionPill status="active">live</SessionPill>);
     const dot = container.querySelector('[data-status]');
     expect(dot?.getAttribute('data-status')).toBe('active');
-    expect(dot?.className).toContain('bg-brand');
+    expect(dot?.className).toContain('bg-accent');
   });
 });
 
@@ -113,7 +113,7 @@ describe('ProjectCard', () => {
     const { getByRole } = render(<ProjectCard title="Canopy" href="/x" />);
     const link = getByRole('link');
     expect(link.className).toContain('hover:-translate-y-0.5');
-    expect(link.className).toContain('hover:border-brand-dim');
+    expect(link.className).toContain('hover:border-accent-dim');
   });
 
   it('renders children in place of description when both provided', () => {
@@ -145,7 +145,7 @@ describe('CodePanel', () => {
 
   it('omits the head strip when neither filename nor tag is provided', () => {
     const { container } = render(<CodePanel>raw</CodePanel>);
-    const head = container.querySelector('.bg-card-2');
+    const head = container.querySelector('.bg-surface-2');
     expect(head).toBeNull();
     expect(container.querySelector('pre')?.textContent).toContain('raw');
   });
@@ -156,8 +156,8 @@ describe('CodePanel', () => {
         body
       </CodePanel>,
     );
-    expect(getByText('// shell').className).toContain('text-brand');
-    expect(getByText('file.ts').className).not.toContain('text-brand');
+    expect(getByText('// shell').className).toContain('text-accent');
+    expect(getByText('file.ts').className).not.toContain('text-accent');
   });
 });
 
@@ -167,7 +167,7 @@ describe('Diagram', () => {
     const pre = container.querySelector('pre');
     expect(pre).not.toBeNull();
     expect(pre?.className).toContain('font-mono');
-    expect(pre?.className).toContain('bg-card-2');
+    expect(pre?.className).toContain('bg-surface-2');
     expect(pre?.className).toContain('whitespace-pre');
   });
 
@@ -179,8 +179,8 @@ describe('Diagram', () => {
         <DiagramDim>dim</DiagramDim>
       </Diagram>,
     );
-    expect(getByText('shell').className).toContain('text-brand');
+    expect(getByText('shell').className).toContain('text-accent');
     expect(getByText('warn').className).toContain('text-warm');
-    expect(getByText('dim').className).toContain('text-subtle-foreground');
+    expect(getByText('dim').className).toContain('text-text-dim');
   });
 });

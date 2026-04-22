@@ -45,7 +45,7 @@ export interface AppCardProps {
 
 /** Shared card-root classes — applied to `<a>`, `<button>` or `<div>`. */
 const cardRootClasses =
-  'group relative flex flex-col overflow-hidden rounded-lg border border-border bg-card text-left text-foreground no-underline transition-[transform,border-color,box-shadow] duration-200 hover:-translate-y-[3px] hover:border-brand-dim hover:shadow-[0_18px_40px_-24px_var(--brand-glow),0_0_0_1px_var(--brand-glow)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-[3px] focus-visible:outline-brand';
+  'group relative flex flex-col overflow-hidden rounded-lg border border-border bg-surface text-left text-text no-underline transition-[transform,border-color,box-shadow] duration-200 hover:-translate-y-[3px] hover:border-accent-dim hover:shadow-[0_18px_40px_-24px_var(--accent-glow),0_0_0_1px_var(--accent-glow)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-[3px] focus-visible:outline-accent';
 
 /** Placeholder-only overrides: dim, non-interactive, no hover lift. */
 const placeholderOverrides =
@@ -54,7 +54,7 @@ const placeholderOverrides =
 /** Diagonal-stripe background for the placeholder visual slot. */
 const placeholderStripeStyle = {
   background:
-    'repeating-linear-gradient(45deg, var(--card-2), var(--card-2) 8px, var(--card) 8px, var(--card) 16px)',
+    'repeating-linear-gradient(45deg, var(--surface-2), var(--surface-2) 8px, var(--surface) 8px, var(--surface) 16px)',
 };
 
 /**
@@ -72,7 +72,7 @@ const placeholderStripeStyle = {
  *
  * The accent prop is surfaced as `data-accent` on the card root so the
  * `[data-accent]` rules in `theme.css` re-scope the accent token trio to
- * the card subtree — every descendant that reads `--brand` etc. pulls the
+ * the card subtree — every descendant that reads `--accent` etc. pulls the
  * card's accent rather than the document root's.
  *
  * @example
@@ -119,17 +119,17 @@ function AppCard({
   const body = (
     <>
       <div
-        className="relative flex items-center justify-center overflow-hidden border-b border-border bg-card-2"
+        className="relative flex items-center justify-center overflow-hidden border-b border-border bg-surface-2"
         style={{ height: `${VISUAL_HEIGHT_PX}px`, ...(placeholder ? placeholderStripeStyle : {}) }}
         aria-hidden
       >
         {placeholder ? (
-          <span className="font-mono text-[1.8rem] text-subtle-foreground">+</span>
+          <span className="font-mono text-[1.8rem] text-text-dim">+</span>
         ) : (
           <>
             {visual ?? null}
             {visualMark ? (
-              <span className="absolute top-3.5 left-[18px] font-mono text-[0.72rem] font-semibold tracking-[0.04em] text-brand">
+              <span className="absolute top-3.5 left-[18px] font-mono text-[0.72rem] font-semibold tracking-[0.04em] text-accent">
                 {visualMark}
               </span>
             ) : null}
@@ -137,7 +137,7 @@ function AppCard({
               className="absolute inset-0 pointer-events-none"
               style={{
                 background:
-                  'radial-gradient(60% 80% at 50% 110%, var(--brand-glow), transparent 70%)',
+                  'radial-gradient(60% 80% at 50% 110%, var(--accent-glow), transparent 70%)',
               }}
             />
           </>
@@ -150,16 +150,16 @@ function AppCard({
             <h2 className="m-0 text-[1.2rem] font-semibold tracking-[-0.01em]">{title}</h2>
             <StatusDot status={status} aria-hidden />
           </div>
-          <p className="m-0 text-[0.88rem] leading-relaxed text-muted-foreground">
+          <p className="m-0 text-[0.88rem] leading-relaxed text-text-muted">
             {description}
           </p>
           {tags ? <div className="flex flex-wrap gap-1.5">{tags}</div> : null}
           <div className="mt-auto flex items-center justify-between gap-3 border-t border-border pt-3 font-mono text-[0.72rem]">
-            <span className="text-subtle-foreground">
+            <span className="text-text-dim">
               {placeholder ? 'not yet available' : (meta ?? '')}
             </span>
             {placeholder ? null : (
-              <span className="text-brand transition-[letter-spacing] duration-200 group-hover:tracking-[0.04em]">
+              <span className="text-accent transition-[letter-spacing] duration-200 group-hover:tracking-[0.04em]">
                 {arrow}
               </span>
             )}

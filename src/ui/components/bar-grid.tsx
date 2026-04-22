@@ -25,7 +25,7 @@ export interface BarGridProps extends Omit<HTMLAttributes<HTMLDivElement>, 'chil
 
 /**
  * An animated ascending-bar visual used as the portfolio app-card identity.
- * Reads `--brand` for colour and applies a per-bar opacity ramp so the
+ * Reads `--accent` for colour and applies a per-bar opacity ramp so the
  * shortest bar is faintest and the tallest reads as a highlight.
  *
  * The rise animation is keyframe-driven (`bar-rise`) and uses `scaleY` from
@@ -73,7 +73,7 @@ function BarGrid({
             key={index}
             data-bar-index={index}
             className={cn(
-              'bg-brand rounded-t-sm',
+              'bg-accent rounded-t-sm',
               animate
                 ? 'motion-safe:[animation:bar-rise_700ms_cubic-bezier(.2,.8,.2,1)_both]'
                 : null,

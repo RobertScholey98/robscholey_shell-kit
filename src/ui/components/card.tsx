@@ -5,7 +5,7 @@ function Card({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) {
   return (
     <div
       className={cn(
-        'rounded-lg border border-border bg-card text-foreground shadow-sm',
+        'rounded-lg border border-border bg-surface text-text shadow-sm',
         className,
       )}
       {...props}
@@ -25,7 +25,7 @@ function CardTitle({ className, ...props }: React.HTMLAttributes<HTMLDivElement>
 
 /** The description within a card header. */
 function CardDescription({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) {
-  return <div className={cn('text-sm text-muted-foreground', className)} {...props} />;
+  return <div className={cn('text-sm text-text-muted', className)} {...props} />;
 }
 
 /** The main content area of a card. */

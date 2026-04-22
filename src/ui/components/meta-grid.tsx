@@ -32,7 +32,7 @@ function MetaGrid({ className, children, ...props }: MetaGridProps): ReactElemen
   return (
     <dl
       className={cn(
-        'm-0 grid gap-1.5 rounded-md border border-border bg-card px-3.5 py-3 font-mono text-[0.74rem] min-w-[200px]',
+        'm-0 grid gap-1.5 rounded-md border border-border bg-surface px-3.5 py-3 font-mono text-[0.74rem] min-w-[200px]',
         className,
       )}
       {...props}
@@ -57,8 +57,8 @@ export interface MetaRowProps {
  * pair wrapped in a flex row so the label sits on the left and the value
  * on the right with `space-between` justify.
  *
- * The key is rendered with uppercase tracking against `--subtle-foreground`;
- * the value uses `--foreground` so it reads as the primary information.
+ * The key is rendered with uppercase tracking against `--text-dim`;
+ * the value uses `--text` so it reads as the primary information.
  *
  * @param props - The meta-row props.
  * @returns A flex-row wrapper containing `<dt>` + `<dd>` elements.
@@ -66,8 +66,8 @@ export interface MetaRowProps {
 function MetaRow({ k, v, className }: MetaRowProps): ReactElement {
   return (
     <div className={cn('flex items-baseline justify-between gap-3.5', className)}>
-      <dt className="m-0 uppercase tracking-[0.08em] text-subtle-foreground">{k}</dt>
-      <dd className="m-0 text-foreground">{v}</dd>
+      <dt className="m-0 uppercase tracking-[0.08em] text-text-dim">{k}</dt>
+      <dd className="m-0 text-text">{v}</dd>
     </div>
   );
 }

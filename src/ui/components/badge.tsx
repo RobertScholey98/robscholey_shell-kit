@@ -15,12 +15,12 @@ const badgeVariants = cva(
   {
     variants: {
       variant: {
-        default: 'border-border bg-card text-muted-foreground',
-        solid: 'border-brand bg-brand text-background',
-        subtle: 'border-brand-dim bg-primary text-primary-foreground',
-        outline: 'border-brand-dim bg-transparent text-brand',
+        default: 'border-border bg-surface text-text-muted',
+        solid: 'border-accent bg-accent text-bg',
+        subtle: 'border-accent-dim bg-accent-deep text-accent',
+        outline: 'border-accent-dim bg-transparent text-accent',
         warm: 'border-warm-dim bg-transparent text-warm',
-        destructive: 'border-destructive bg-transparent text-destructive',
+        destructive: 'border-danger bg-transparent text-danger',
       },
     },
     defaultVariants: {

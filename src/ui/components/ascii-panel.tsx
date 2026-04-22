@@ -8,12 +8,12 @@ export interface AsciiPanelProps extends Omit<HTMLAttributes<HTMLPreElement>, 'c
 }
 
 /**
- * A lightweight ASCII visual — transparent background, no border, `--brand`
+ * A lightweight ASCII visual — transparent background, no border, `--accent`
  * text. Meant to sit inside an existing container (e.g. an app-card's
  * `.card-visual` surface) without bringing its own framing.
  *
  * Distinct from {@link Diagram}, which is a self-framing block diagram with
- * its own `--card-2` surface, border, and padding. If you want the ASCII to
+ * its own `--surface-2` surface, border, and padding. If you want the ASCII to
  * read as a standalone code-style block, reach for `<Diagram>` instead.
  *
  * @example
@@ -32,7 +32,7 @@ function AsciiPanel({ className, children, ...props }: AsciiPanelProps): ReactEl
   return (
     <pre
       className={cn(
-        'm-0 bg-transparent font-mono text-[0.78rem] leading-[1.35] text-brand whitespace-pre',
+        'm-0 bg-transparent font-mono text-[0.78rem] leading-[1.35] text-accent whitespace-pre',
         className,
       )}
       {...props}

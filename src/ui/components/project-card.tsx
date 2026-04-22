@@ -12,9 +12,9 @@ const statusVariants = cva(
   {
     variants: {
       statusVariant: {
-        default: 'text-subtle-foreground',
-        live: 'text-brand',
-        work: 'text-muted-foreground',
+        default: 'text-text-dim',
+        live: 'text-accent',
+        work: 'text-text-muted',
         paused: 'text-warm',
       },
     },
@@ -52,7 +52,7 @@ export interface ProjectCardProps {
 
 /** Shared card container classes. Applied to `<a>`, `<button>` or `<div>`. */
 const cardClasses =
-  'group relative flex flex-col gap-3 overflow-hidden rounded-lg border border-border bg-card p-6 text-left text-foreground shadow-sm transition-[border-color,background-color,transform,box-shadow] duration-200 ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-0.5 hover:border-brand-dim hover:bg-card-hi hover:shadow-[0_8px_24px_-20px_var(--brand-glow)]';
+  'group relative flex flex-col gap-3 overflow-hidden rounded-lg border border-border bg-surface p-6 text-left text-text shadow-sm transition-[border-color,background-color,transform,box-shadow] duration-200 ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-0.5 hover:border-accent-dim hover:bg-surface-hi hover:shadow-[0_8px_24px_-20px_var(--accent-glow)]';
 
 /**
  * The flagship project-card component — card surface, title + status row,
@@ -99,12 +99,12 @@ function ProjectCard({
       </div>
       {children ?? (
         description ? (
-          <p className="m-0 text-[0.92rem] text-muted-foreground leading-relaxed">{description}</p>
+          <p className="m-0 text-[0.92rem] text-text-muted leading-relaxed">{description}</p>
         ) : null
       )}
       {tags ? <div className="flex flex-wrap gap-1.5">{tags}</div> : null}
       {arrow ? (
-        <span className="mt-auto inline-flex items-center gap-1.5 font-mono text-[0.85rem] text-brand transition-all group-hover:gap-2.5">
+        <span className="mt-auto inline-flex items-center gap-1.5 font-mono text-[0.85rem] text-accent transition-all group-hover:gap-2.5">
           {arrow}
         </span>
       ) : null}

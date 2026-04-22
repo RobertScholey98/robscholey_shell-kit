@@ -60,7 +60,7 @@ function MonoMark({
   return (
     <div
       className={cn(
-        'relative inline-flex items-center justify-center rounded-xl bg-card-hi',
+        'relative inline-flex items-center justify-center rounded-xl bg-surface-hi',
         className,
       )}
       style={{ width: `${px}px`, height: `${px}px`, ...style }}
@@ -72,7 +72,7 @@ function MonoMark({
       <Corner position="br" sizePx={cornerPx} />
       {letter ? (
         <span
-          className="font-mono font-semibold text-foreground leading-none"
+          className="font-mono font-semibold text-text leading-none"
           style={{ fontSize: letterRem }}
         >
           {letter}
@@ -126,7 +126,7 @@ function Corner({
       data-corner={position}
       aria-hidden
       className={cn(
-        'absolute border-[1.5px] border-brand',
+        'absolute border-[1.5px] border-accent',
         anchor,
         zeroed,
         radius,

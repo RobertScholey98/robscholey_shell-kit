@@ -39,12 +39,12 @@ function DrawerContent({
       <DrawerOverlay />
       <DrawerPrimitive.Content
         className={cn(
-          'fixed inset-x-0 bottom-0 z-50 mt-24 flex h-auto max-h-[85dvh] flex-col rounded-t-xl border bg-background',
+          'fixed inset-x-0 bottom-0 z-50 mt-24 flex h-auto max-h-[85dvh] flex-col rounded-t-xl border bg-bg',
           className,
         )}
         {...props}
       >
-        <div className="mx-auto mt-4 h-1.5 w-12 rounded-full bg-muted" aria-hidden="true" />
+        <div className="mx-auto mt-4 h-1.5 w-12 rounded-full bg-bg-soft" aria-hidden="true" />
         <div className="overflow-y-auto p-6 pb-[calc(1.5rem+env(safe-area-inset-bottom))]">
           {children}
         </div>
@@ -83,7 +83,7 @@ function DrawerDescription({
 }: React.ComponentPropsWithRef<typeof DrawerPrimitive.Description>) {
   return (
     <DrawerPrimitive.Description
-      className={cn('text-sm text-muted-foreground', className)}
+      className={cn('text-sm text-text-muted', className)}
       {...props}
     />
   );

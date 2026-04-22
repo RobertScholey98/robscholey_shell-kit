@@ -15,7 +15,7 @@ describe('StatusDot', () => {
     const dot = container.querySelector('[data-status]');
     expect(dot).not.toBeNull();
     expect(dot?.getAttribute('data-status')).toBe('live');
-    expect(dot?.className).toContain('bg-brand');
+    expect(dot?.className).toContain('bg-accent');
   });
 
   it('renders dev with a warm background', () => {
@@ -28,7 +28,7 @@ describe('StatusDot', () => {
   it('renders soon with the subtle-foreground background and no halo', () => {
     const { container } = render(<StatusDot status="soon" />);
     const dot = container.querySelector('[data-status="soon"]');
-    expect(dot?.className).toContain('bg-subtle-foreground');
+    expect(dot?.className).toContain('bg-text-dim');
     expect(dot?.className).not.toContain('shadow-');
   });
 
@@ -72,7 +72,7 @@ describe('MetaGrid / MetaRow', () => {
       </MetaGrid>,
     );
     const dt = getByText('code');
-    expect(dt.className).toContain('text-subtle-foreground');
+    expect(dt.className).toContain('text-text-dim');
     expect(dt.className).toContain('uppercase');
   });
 
@@ -359,7 +359,7 @@ describe('AsciiPanel', () => {
     const pre = container.querySelector('pre');
     expect(pre).not.toBeNull();
     expect(pre?.className).toContain('font-mono');
-    expect(pre?.className).toContain('text-brand');
+    expect(pre?.className).toContain('text-accent');
     expect(pre?.className).toContain('bg-transparent');
     expect(pre?.textContent).toContain('┌──┐');
   });

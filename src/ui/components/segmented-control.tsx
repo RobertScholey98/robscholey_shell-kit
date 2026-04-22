@@ -59,7 +59,7 @@ function SegmentedControl({
         if (v && onValueChange) onValueChange(v);
       }}
       className={cn(
-        'inline-flex items-center gap-2 rounded-full border border-border bg-background p-1',
+        'inline-flex items-center gap-2 rounded-full border border-border bg-bg p-1',
         className,
       )}
       {...props}
@@ -76,7 +76,7 @@ export type SegmentedControlItemProps = React.ComponentPropsWithoutRef<
 
 /**
  * A single item inside a {@link SegmentedControl}. Active state is driven
- * by Radix data attributes (`data-state="on"`) and styled via a `--card-2`
+ * by Radix data attributes (`data-state="on"`) and styled via a `--surface-2`
  * fill and an inset ring so the active pill reads as pressed.
  *
  * @param props - The item props.
@@ -90,7 +90,7 @@ function SegmentedControlItem({
   return (
     <ToggleGroupPrimitive.Item
       className={cn(
-        'inline-flex cursor-pointer items-center gap-1.5 rounded-full border-0 bg-transparent px-3 py-1.5 font-mono text-[0.72rem] text-muted-foreground transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring data-[state=on]:bg-card-2 data-[state=on]:text-foreground data-[state=on]:shadow-[inset_0_0_0_1px_var(--border)]',
+        'inline-flex cursor-pointer items-center gap-1.5 rounded-full border-0 bg-transparent px-3 py-1.5 font-mono text-[0.72rem] text-text-muted transition-colors hover:text-text focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring data-[state=on]:bg-surface-2 data-[state=on]:text-text data-[state=on]:shadow-[inset_0_0_0_1px_var(--border)]',
         className,
       )}
       {...props}

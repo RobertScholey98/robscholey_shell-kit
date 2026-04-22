@@ -13,7 +13,7 @@ import { cn } from '../lib/cn';
  *   variant at call sites.
  * - `code` is inline monospace at body scale.
  *
- * `withAccent` adds a 32 px × 1 px leading bar in `--brand` above heading
+ * `withAccent` adds a 32 px × 1 px leading bar in `--accent` above heading
  * variants, implemented as a `::before` pseudo. It's a no-op on body / small
  * / mono-label / code.
  */
@@ -31,9 +31,9 @@ const typographyVariants = cva('m-0', {
       h2: 'text-[1.4rem] font-semibold leading-tight',
       h3: 'text-[1.05rem] font-semibold leading-snug',
       body: 'text-base leading-[1.65]',
-      small: 'text-[0.88rem] text-muted-foreground',
+      small: 'text-[0.88rem] text-text-muted',
       'mono-label':
-        'font-mono text-[0.72rem] uppercase tracking-[0.14em] text-brand',
+        'font-mono text-[0.72rem] uppercase tracking-[0.14em] text-accent',
       code: 'font-mono text-[0.82rem]',
     },
     align: {
@@ -42,7 +42,7 @@ const typographyVariants = cva('m-0', {
       right: 'text-right',
     },
     withAccent: {
-      true: 'relative pt-[0.7em] before:content-[""] before:absolute before:left-0 before:top-0 before:w-8 before:h-px before:bg-brand',
+      true: 'relative pt-[0.7em] before:content-[""] before:absolute before:left-0 before:top-0 before:w-8 before:h-px before:bg-accent',
       false: '',
     },
   },
@@ -98,7 +98,7 @@ export interface TypographyProps
  * Override with the `as` prop when semantics differ from visuals.
  *
  * Headings accept an optional `withAccent` prop that renders a leading bar in
- * `--brand` above the text — matches the `ds-eyebrow` treatment used on the
+ * `--accent` above the text — matches the `ds-eyebrow` treatment used on the
  * reference design.
  *
  * @example

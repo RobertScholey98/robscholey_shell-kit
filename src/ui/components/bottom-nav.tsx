@@ -36,7 +36,7 @@ function BottomNav({ className, children, ...props }: BottomNavProps): ReactElem
     <nav
       aria-label="Primary navigation"
       className={cn(
-        'fixed inset-x-0 bottom-0 z-[60] border-t border-border bg-[color-mix(in_srgb,var(--background)_92%,transparent)] pb-[env(safe-area-inset-bottom)] backdrop-blur-[14px]',
+        'fixed inset-x-0 bottom-0 z-[60] border-t border-border bg-[color-mix(in_srgb,var(--bg)_92%,transparent)] pb-[env(safe-area-inset-bottom)] backdrop-blur-[14px]',
         className,
       )}
       {...props}
@@ -77,8 +77,8 @@ export type BottomNavItemProps = BottomNavItemBaseProps &
  * or passes through to a slotted child (e.g. a Next.js `<Link>`) when
  * `asChild` is set.
  *
- * Active state tints the label in `--brand` and lifts the icon frame with
- * a tinted `--card-2` fill; the frame is otherwise transparent so the item
+ * Active state tints the label in `--accent` and lifts the icon frame with
+ * a tinted `--surface-2` fill; the frame is otherwise transparent so the item
  * reads as flat until hovered or activated.
  *
  * @param props - The bottom-nav-item props.
@@ -99,8 +99,8 @@ function BottomNavItem({
       data-active={active || undefined}
       aria-current={active ? 'page' : undefined}
       className={cn(
-        'relative flex flex-1 cursor-pointer flex-col items-center gap-0.5 rounded-md border-0 bg-transparent px-1 py-1.5 font-mono text-[0.66rem] text-subtle-foreground transition-colors hover:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring',
-        active && 'text-brand hover:text-brand',
+        'relative flex flex-1 cursor-pointer flex-col items-center gap-0.5 rounded-md border-0 bg-transparent px-1 py-1.5 font-mono text-[0.66rem] text-text-dim transition-colors hover:text-text-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring',
+        active && 'text-accent hover:text-accent',
         className,
       )}
       {...props}
@@ -108,14 +108,14 @@ function BottomNavItem({
       <span
         className={cn(
           'relative inline-flex h-7 w-7 items-center justify-center rounded-lg border border-transparent transition-colors [&_svg]:h-[18px] [&_svg]:w-[18px]',
-          active && 'border-brand bg-[color-mix(in_srgb,var(--brand)_10%,var(--card-2))]',
+          active && 'border-accent bg-[color-mix(in_srgb,var(--accent)_10%,var(--surface-2))]',
         )}
       >
         {icon}
         {badge !== undefined && badge > 0 && (
           <span
             aria-hidden
-            className="absolute -right-1.5 -top-1 inline-flex h-[14px] min-w-[14px] items-center justify-center rounded-full bg-warm px-1 font-mono text-[0.6rem] font-semibold text-background"
+            className="absolute -right-1.5 -top-1 inline-flex h-[14px] min-w-[14px] items-center justify-center rounded-full bg-warm px-1 font-mono text-[0.6rem] font-semibold text-bg"
           >
             {badge}
           </span>

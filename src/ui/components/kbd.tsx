@@ -16,7 +16,7 @@ function Kbd({ className, ...props }: KbdProps) {
   return (
     <kbd
       className={cn(
-        'inline-flex items-center font-mono text-[0.72rem] bg-card-2 text-foreground border border-border border-b-2 rounded-sm px-1.5 py-0.5',
+        'inline-flex items-center font-mono text-[0.72rem] bg-surface-2 text-text border border-border border-b-2 rounded-sm px-1.5 py-0.5',
         className,
       )}
       {...props}

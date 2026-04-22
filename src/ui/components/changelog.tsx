@@ -33,7 +33,7 @@ function Changelog({ className, children, ...props }: ChangelogProps): ReactElem
   return (
     <ol
       className={cn(
-        'm-0 flex list-none flex-col overflow-hidden rounded-md border border-border bg-card p-0',
+        'm-0 flex list-none flex-col overflow-hidden rounded-md border border-border bg-surface p-0',
         className,
       )}
       {...props}
@@ -64,7 +64,7 @@ export interface ChangelogItemProps {
  * - Narrow (< 560 px): 3-column header row (`dot · app · when`) above a
  *   full-width message row.
  *
- * The accent dot reads its colour from `--brand`; `data-accent` on the dot
+ * The accent dot reads its colour from `--accent`; `data-accent` on the dot
  * re-scopes the accent token trio to that element so the dot's colour is
  * driven by the same cascade the rest of the design system uses (no
  * hardcoded hex table as in the raw handoff CSS).
@@ -92,15 +92,15 @@ function ChangelogItem({
       <span
         data-accent={accent}
         aria-hidden
-        className="h-2 w-2 rounded-full bg-brand max-[559px]:[grid-area:dot]"
+        className="h-2 w-2 rounded-full bg-accent max-[559px]:[grid-area:dot]"
       />
-      <span className="font-mono text-[0.74rem] text-muted-foreground lowercase min-w-[72px] max-[559px]:[grid-area:app]">
+      <span className="font-mono text-[0.74rem] text-text-muted lowercase min-w-[72px] max-[559px]:[grid-area:app]">
         {app}
       </span>
-      <span className="text-foreground leading-snug max-[559px]:[grid-area:msg] max-[559px]:text-[0.82rem]">
+      <span className="text-text leading-snug max-[559px]:[grid-area:msg] max-[559px]:text-[0.82rem]">
         {children}
       </span>
-      <span className="font-mono text-[0.72rem] text-subtle-foreground max-[559px]:[grid-area:when]">
+      <span className="font-mono text-[0.72rem] text-text-dim max-[559px]:[grid-area:when]">
         {when}
       </span>
     </li>

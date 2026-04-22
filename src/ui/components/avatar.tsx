@@ -18,8 +18,8 @@ export type AvatarProps = React.ComponentPropsWithRef<typeof AvatarPrimitive.Roo
 };
 
 /**
- * A circular avatar container. Defaults to the tinted `--primary` surface
- * with a `--brand-dim` outline — matching the mono-font initial-cap treatment
+ * A circular avatar container. Defaults to the tinted `--accent-deep` surface
+ * with a `--accent-dim` outline — matching the mono-font initial-cap treatment
  * from the reference design. Accepts an optional `presence` prop that
  * overlays a status dot on the bottom-right.
  */
@@ -27,7 +27,7 @@ function Avatar({ className, children, presence, ...props }: AvatarProps) {
   return (
     <AvatarPrimitive.Root
       className={cn(
-        'relative inline-flex h-10 w-10 shrink-0 items-center justify-center overflow-visible rounded-full border border-brand-dim bg-primary text-primary-foreground font-mono text-[0.82rem] font-medium',
+        'relative inline-flex h-10 w-10 shrink-0 items-center justify-center overflow-visible rounded-full border border-accent-dim bg-accent-deep text-accent font-mono text-[0.82rem] font-medium',
         className,
       )}
       {...props}
@@ -42,9 +42,9 @@ function Avatar({ className, children, presence, ...props }: AvatarProps) {
           className={cn(
             'absolute bottom-0 right-0 h-[10px] w-[10px] rounded-full ring-2 ring-background',
             presence === 'live' &&
-              'bg-brand shadow-[0_0_0_3px_var(--brand-glow)]',
+              'bg-accent shadow-[0_0_0_3px_var(--accent-glow)]',
             presence === 'idle' && 'bg-warm',
-            presence === 'off' && 'bg-subtle-foreground',
+            presence === 'off' && 'bg-text-dim',
           )}
         />
       )}
@@ -70,7 +70,7 @@ function AvatarFallback({
   return (
     <AvatarPrimitive.Fallback
       className={cn(
-        'flex h-full w-full items-center justify-center rounded-full bg-primary text-primary-foreground',
+        'flex h-full w-full items-center justify-center rounded-full bg-accent-deep text-accent',
         className,
       )}
       {...props}
@@ -80,7 +80,7 @@ function AvatarFallback({
 
 /**
  * Props for {@link AvatarGroup}. Siblings after the first receive a small
- * negative margin to overlap, and a ring in `--background` to punch them
+ * negative margin to overlap, and a ring in `--bg` to punch them
  * apart visually.
  */
 export type AvatarGroupProps = React.HTMLAttributes<HTMLDivElement>;

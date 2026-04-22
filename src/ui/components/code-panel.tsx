@@ -14,7 +14,7 @@ export interface CodePanelProps {
 }
 
 /**
- * A framed code panel — a card-surface outer with a thin `--card-2` head
+ * A framed code panel — a card-surface outer with a thin `--surface-2` head
  * strip for the filename and a monospace body. No syntax highlighting is
  * applied; consumers can pre-highlight and pass `children` as-is.
  *
@@ -30,13 +30,13 @@ function CodePanel({ filename, tag, children, className }: CodePanelProps): Reac
   return (
     <div
       className={cn(
-        'overflow-hidden rounded-md border border-border bg-card',
+        'overflow-hidden rounded-md border border-border bg-surface',
         className,
       )}
     >
       {hasHead ? (
-        <div className="flex gap-2 bg-card-2 border-b border-border px-3.5 py-2 font-mono text-[0.72rem] text-muted-foreground">
-          {tag ? <span className="text-brand">{tag}</span> : null}
+        <div className="flex gap-2 bg-surface-2 border-b border-border px-3.5 py-2 font-mono text-[0.72rem] text-text-muted">
+          {tag ? <span className="text-accent">{tag}</span> : null}
           {filename ? <span>{filename}</span> : null}
         </div>
       ) : null}

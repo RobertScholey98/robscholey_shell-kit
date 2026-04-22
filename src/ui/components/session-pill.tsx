@@ -5,8 +5,8 @@ import { cn } from '../lib/cn';
 const dotVariants = cva('h-1.5 w-1.5 rounded-full animate-pulse', {
   variants: {
     status: {
-      default: 'bg-brand',
-      active: 'bg-brand',
+      default: 'bg-accent',
+      active: 'bg-accent',
       paused: 'bg-warm',
     },
   },
@@ -40,7 +40,7 @@ function SessionPill({ className, status, children, ...props }: SessionPillProps
   return (
     <span
       className={cn(
-        'inline-flex items-center gap-2 rounded-full px-3 py-1 bg-card-2 border border-border font-mono text-[0.72rem] uppercase tracking-[0.1em] text-subtle-foreground whitespace-nowrap',
+        'inline-flex items-center gap-2 rounded-full px-3 py-1 bg-surface-2 border border-border font-mono text-[0.72rem] uppercase tracking-[0.1em] text-text-dim whitespace-nowrap',
         className,
       )}
       {...props}

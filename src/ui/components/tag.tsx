@@ -4,16 +4,16 @@ import { cn } from '../lib/cn';
 /**
  * Tag styling — a monospace chip used for tech labels on project cards.
  *
- * Default is a neutral outlined pill on `--card-2`. `accent` tints the text
- * and border in `--brand`; `warm` tints in `--warm` for secondary callouts.
+ * Default is a neutral outlined pill on `--surface-2`. `accent` tints the text
+ * and border in `--accent`; `warm` tints in `--warm` for secondary callouts.
  */
 const tagVariants = cva(
   'inline-flex items-center rounded font-mono text-[0.72rem] uppercase tracking-[0.14em] px-2 py-0.5 whitespace-nowrap border',
   {
     variants: {
       variant: {
-        default: 'bg-card-2 text-muted-foreground border-border',
-        accent: 'bg-transparent text-brand border-brand-dim',
+        default: 'bg-surface-2 text-text-muted border-border',
+        accent: 'bg-transparent text-accent border-accent-dim',
         warm: 'bg-transparent text-warm border-warm-dim',
       },
     },

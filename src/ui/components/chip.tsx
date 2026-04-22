@@ -17,8 +17,8 @@ export interface ChipProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 /**
  * A filter / tab-row chip. Renders as a `<button>` by default so keyboard
  * interaction and click handlers work with no wrapping. The chip sits on
- * `--card` with a subtle border; active state tints the background and
- * border in `--brand` while the label shifts to `--brand`.
+ * `--surface` with a subtle border; active state tints the background and
+ * border in `--accent` while the label shifts to `--accent`.
  *
  * Distinct from `<Tag>` (tech label, uppercase, tracking) and `<Badge>`
  * (inline label, no interaction). Chips carry state and are tappable.
@@ -47,9 +47,9 @@ function Chip({
       data-active={active || undefined}
       aria-pressed={active}
       className={cn(
-        'inline-flex cursor-pointer items-center gap-1.5 whitespace-nowrap rounded-full border border-border bg-card px-[11px] py-[5px] font-mono text-[0.72rem] text-muted-foreground transition-[color,background-color,border-color] duration-150 hover:border-brand-dim hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring',
+        'inline-flex cursor-pointer items-center gap-1.5 whitespace-nowrap rounded-full border border-border bg-surface px-[11px] py-[5px] font-mono text-[0.72rem] text-text-muted transition-[color,background-color,border-color] duration-150 hover:border-accent-dim hover:text-text focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring',
         active &&
-          'border-[color-mix(in_srgb,var(--brand)_35%,var(--border))] bg-[color-mix(in_srgb,var(--brand)_10%,var(--card-2))] text-brand hover:text-brand',
+          'border-[color-mix(in_srgb,var(--accent)_35%,var(--border))] bg-[color-mix(in_srgb,var(--accent)_10%,var(--surface-2))] text-accent hover:text-accent',
         className,
       )}
       {...props}
@@ -59,7 +59,7 @@ function Chip({
         <span
           className={cn(
             'text-[0.68rem]',
-            active ? 'text-brand opacity-75' : 'text-subtle-foreground',
+            active ? 'text-accent opacity-75' : 'text-text-dim',
           )}
         >
           {count}
