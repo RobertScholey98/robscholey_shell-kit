@@ -34,16 +34,14 @@ function CardContent({ className, ...props }: React.HTMLAttributes<HTMLDivElemen
 }
 
 /**
- * The footer section of a card. Sits on the mid-surface `--card-2` tier to
- * visually separate actions from the body content.
+ * The footer section of a card. Flat margin-top + flex action row, no extra
+ * surface chrome. Aligns with the design's `.card-footer` rule which sits
+ * inside the card's existing 24 px gutter.
  */
 function CardFooter({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) {
   return (
     <div
-      className={cn(
-        'flex items-center gap-2 rounded-b-lg border-t border-border bg-card-2 p-4 sm:p-6',
-        className,
-      )}
+      className={cn('mt-[18px] flex items-center justify-end gap-2 px-4 pb-4 sm:px-6 sm:pb-6', className)}
       {...props}
     />
   );

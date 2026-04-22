@@ -6,7 +6,7 @@ import { cn } from '../lib/cn';
  * The tint drives off the variant and is re-used by the companion `AlertIcon`.
  */
 const alertVariants = cva(
-  'relative w-full rounded-md border border-border border-l-[3px] bg-card px-4 py-3 text-sm flex gap-3 items-start',
+  'relative flex w-full items-start gap-[14px] rounded-md border border-border border-l-[3px] bg-card px-[18px] py-[14px] text-sm',
   {
     variants: {
       variant: {
@@ -22,7 +22,7 @@ const alertVariants = cva(
 );
 
 const alertIconVariants = cva(
-  'flex h-6 w-6 shrink-0 items-center justify-center rounded-full border font-mono text-[0.72rem]',
+  'mt-[2px] inline-flex h-[18px] w-[18px] shrink-0 items-center justify-center rounded-full border-[1.5px] font-mono text-[0.72rem]',
   {
     variants: {
       variant: {

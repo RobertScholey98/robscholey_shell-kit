@@ -13,7 +13,7 @@ function Input({ className, type, ...props }: InputProps) {
     <input
       type={type}
       className={cn(
-        'flex min-h-[44px] w-full rounded-md border border-input bg-background px-3 py-2 text-base text-foreground transition-colors placeholder:text-subtle-foreground file:border-0 file:bg-transparent file:text-base file:font-medium file:text-foreground focus:outline-none focus:border-ring focus:shadow-[0_0_0_3px_var(--brand-glow)] disabled:cursor-not-allowed disabled:opacity-50 sm:text-sm',
+        'flex min-h-[44px] w-full rounded-md border border-input bg-background px-3 py-2 text-base text-foreground transition-colors placeholder:text-subtle-foreground file:border-0 file:bg-transparent file:text-base file:font-medium file:text-foreground focus:outline-none focus:border-ring focus:shadow-[0_0_0_3px_var(--brand-glow)] disabled:cursor-not-allowed disabled:opacity-50 sm:text-[0.92rem]',
         className,
       )}
       {...props}

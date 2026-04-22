@@ -15,7 +15,12 @@ function SelectTrigger({
   return (
     <SelectPrimitive.Trigger
       className={cn(
-        'flex h-9 w-full items-center justify-between whitespace-nowrap rounded-md border border-input bg-background px-3 py-2 text-sm text-foreground placeholder:text-subtle-foreground transition-colors focus:outline-none focus:border-ring focus:shadow-[0_0_0_3px_var(--brand-glow)] disabled:cursor-not-allowed disabled:opacity-50 [&>span]:line-clamp-1',
+        // Open state mirrors focus styling. Radix moves focus to the
+        // listbox when the popover opens, so without `data-[state=open]`
+        // the trigger drops back to its subtle `--input` border the
+        // moment the user clicks — and the bright focus border only
+        // re-appears for a frame on close, which reads as a glitch.
+        'flex h-9 w-full cursor-pointer items-center justify-between whitespace-nowrap rounded-md border border-input bg-background px-3 py-2 text-[0.92rem] text-foreground placeholder:text-subtle-foreground transition-[color,background-color,border-color,box-shadow] duration-150 focus:outline-none focus:border-ring focus:shadow-[0_0_0_3px_var(--brand-glow)] data-[state=open]:border-ring data-[state=open]:shadow-[0_0_0_3px_var(--brand-glow)] disabled:cursor-not-allowed disabled:opacity-50 [&>span]:line-clamp-1',
         className,
       )}
       {...props}

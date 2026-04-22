@@ -17,7 +17,12 @@ import { cn } from '../lib/cn';
  * variants, implemented as a `::before` pseudo. It's a no-op on body / small
  * / mono-label / code.
  */
-const typographyVariants = cva('', {
+// Every variant zeroes browser-default margins so spacing is parent-controlled
+// (flex/grid gap, surrounding `mb-*`, etc.). The design's stylesheet does the
+// same via `p { margin: 0 0 1.1em }` and `h1-h4 { margin: 0 0 0.6em }` resets;
+// here we keep it scoped to the component so consumers don't need a global
+// reset to get the design's rendering.
+const typographyVariants = cva('m-0', {
   variants: {
     variant: {
       display:

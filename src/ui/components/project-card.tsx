@@ -2,16 +2,20 @@ import type { ReactElement, ReactNode } from 'react';
 import { cva, type VariantProps } from 'class-variance-authority';
 import { cn } from '../lib/cn';
 
-/** Status pill styling, inset into the card head. */
+/**
+ * Status label styling. Design's `.pc-status` is bare mono text in a
+ * variant-keyed colour — no pill chrome, no background, no border. The
+ * colour is the only signal.
+ */
 const statusVariants = cva(
-  'font-mono text-[0.7rem] uppercase tracking-[0.1em] shrink-0 rounded px-2 py-0.5 whitespace-nowrap',
+  'font-mono text-[0.7rem] uppercase tracking-[0.1em] shrink-0 whitespace-nowrap',
   {
     variants: {
       statusVariant: {
-        default: 'bg-card-2 text-muted-foreground',
-        live: 'bg-primary text-primary-foreground',
-        work: 'bg-primary text-primary-foreground',
-        paused: 'bg-warm-dim text-warm',
+        default: 'text-subtle-foreground',
+        live: 'text-brand',
+        work: 'text-muted-foreground',
+        paused: 'text-warm',
       },
     },
     defaultVariants: {
@@ -48,7 +52,7 @@ export interface ProjectCardProps {
 
 /** Shared card container classes. Applied to `<a>`, `<button>` or `<div>`. */
 const cardClasses =
-  'group relative flex flex-col gap-3 overflow-hidden rounded-lg border border-border bg-card p-5 text-left text-foreground transition-all duration-200 hover:-translate-y-0.5 hover:border-brand-dim hover:bg-card-hi hover:shadow-[0_16px_40px_-24px_var(--brand-glow)]';
+  'group relative flex flex-col gap-3 overflow-hidden rounded-lg border border-border bg-card p-6 text-left text-foreground shadow-sm transition-[border-color,background-color,transform,box-shadow] duration-200 ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-0.5 hover:border-brand-dim hover:bg-card-hi hover:shadow-[0_8px_24px_-20px_var(--brand-glow)]';
 
 /**
  * The flagship project-card component — card surface, title + status row,
