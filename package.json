@@ -1,6 +1,6 @@
 {
   "name": "@robscholey/shell-kit",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Shared postMessage protocol, React hooks, and TanStack Query integration for robscholey.com sub-apps",
   "repository": {
     "type": "git",
