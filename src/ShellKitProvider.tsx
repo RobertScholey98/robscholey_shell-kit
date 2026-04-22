@@ -47,7 +47,14 @@ interface ShellKitContextValue {
   setAccent: (accent: Accent) => void;
 }
 
-const ShellKitContext = createContext<ShellKitContextValue | null>(null);
+/**
+ * Internal context carrying shell-kit state. Exported for PageTheme and
+ * other shell-kit internals that want to read the config without requiring
+ * a provider (they fall through to a no-op when `ctx` is `null`). Consumers
+ * outside shell-kit should use {@link useShellKitConfig} / {@link useTheme}
+ * / {@link useAccent}.
+ */
+export const ShellKitContext = createContext<ShellKitContextValue | null>(null);
 
 /** Props for the {@link ShellKitProvider} component. */
 export interface ShellKitProviderProps {

@@ -7,6 +7,13 @@ export type {
   UseAccentResult,
 } from './ShellKitProvider';
 
+// Page + subtree theming primitives. Pages declare their accent + theme
+// in markup; these express the contract through the React tree.
+export { PageTheme } from './PageTheme';
+export type { PageThemeProps } from './PageTheme';
+export { ThemeCandy } from './ThemeCandy';
+export type { ThemeCandyProps } from './ThemeCandy';
+
 // Protocol version and message parsers
 export { PROTOCOL_VERSION, parseShellMessage, parseChildMessage, ACCENTS } from './messages';
 
