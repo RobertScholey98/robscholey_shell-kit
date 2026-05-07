@@ -67,3 +67,9 @@ export type { ShellQueryProviderProps } from './ShellQueryProvider';
 // Utilities
 export { navigateToShell } from './navigateToShell';
 export { isInIframe } from './isInIframe';
+export {
+  waitForJwtChange,
+  JWT_CHANGE_TIMEOUT_MS,
+  JWT_CHANGE_POLL_INTERVAL_MS,
+} from './util/waitForJwtChange';
+export type { WaitForJwtChangeOptions } from './util/waitForJwtChange';

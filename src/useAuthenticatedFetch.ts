@@ -1,7 +1,5 @@
 import { useRef, useCallback, useEffect } from 'react';
-
-const JWT_REFRESH_TIMEOUT_MS = 2000;
-const JWT_REFRESH_POLL_MS = 50;
+import { waitForJwtChange } from './util/waitForJwtChange';
 
 /**
  * Returns a fetch wrapper that attaches the current JWT as an Authorization header.
@@ -42,7 +40,10 @@ export function useAuthenticatedFetch(
         const previousJwt = jwtRef.current;
         requestJWTRefresh();
 
-        const newJwt = await waitForJwtChange(jwtRef, previousJwt, cancelledRef);
+        const newJwt = await waitForJwtChange(previousJwt, {
+          getter: () => jwtRef.current,
+          cancelled: () => cancelledRef.current,
+        });
         if (newJwt && newJwt !== previousJwt && !cancelledRef.current) {
           const retryHeaders = new Headers(init?.headers);
           retryHeaders.set('Authorization', `Bearer ${newJwt}`);
@@ -56,37 +57,4 @@ export function useAuthenticatedFetch(
   );
 
   return { authenticatedFetch };
-}
-
-/**
- * Polls a ref for a JWT value change within a timeout.
- * Aborts early if the cancelled ref becomes true (component unmounted).
- * @returns The new JWT value, or null if the timeout expired or was cancelled.
- */
-function waitForJwtChange(
-  jwtRef: React.RefObject<string | null>,
-  previousJwt: string,
-  cancelledRef: React.RefObject<boolean>,
-): Promise<string | null> {
-  return new Promise((resolve) => {
-    const start = Date.now();
-
-    function poll() {
-      if (cancelledRef.current) {
-        resolve(null);
-        return;
-      }
-      if (jwtRef.current !== previousJwt) {
-        resolve(jwtRef.current);
-        return;
-      }
-      if (Date.now() - start > JWT_REFRESH_TIMEOUT_MS) {
-        resolve(null);
-        return;
-      }
-      setTimeout(poll, JWT_REFRESH_POLL_MS);
-    }
-
-    poll();
-  });
 }
