@@ -3,14 +3,14 @@
 // `next-env.d.ts` (which normally references this file) doesn't exist here.
 /// <reference types="next/types/global" />
 
+import { appMetaSchema } from '@robscholey/contracts';
 import type { Accent, ShellTheme } from '../messages';
-import { ACCENTS } from '../messages';
 
 /**
  * The minimal shape `<ShellRootLayout>` needs from the auth-microservice's
  * `/api/apps/:slug/meta` endpoint. Sub-apps that want the full `AppMeta`
  * shape (name, iconUrl, …) should fetch it themselves and parse against
- * `@robscholey/contracts`'s `appMetaResponseSchema`.
+ * `@robscholey/contracts`'s `appMetaSchema`.
  */
 export interface AppThemingDefaults {
   /** Admin-configured default theme for this app, mirrored to `<html data-theme>`. */
@@ -27,8 +27,14 @@ export interface FetchAppMetaOptions {
   fallbackAccent?: Accent;
 }
 
-const THEMES: ReadonlySet<ShellTheme> = new Set<ShellTheme>(['light', 'dark']);
-const ACCENT_SET: ReadonlySet<Accent> = new Set<Accent>(ACCENTS);
+// Narrow `appMetaSchema` to the two fields the SSR root layout actually
+// needs. Picking off the contracts schema means a new theme/accent enum
+// value lands here without a code change — the schema is the single
+// source of truth for the accepted enum sets.
+const themingDefaultsSchema = appMetaSchema.pick({
+  defaultTheme: true,
+  defaultAccent: true,
+});
 
 /**
  * Resolves the auth-microservice base URL. Server-side prefers the
@@ -78,15 +84,15 @@ export async function fetchAppMeta(
       );
       return fallback;
     }
-    const body = (await res.json()) as Partial<AppThemingDefaults>;
-    return {
-      defaultTheme: THEMES.has(body.defaultTheme as ShellTheme)
-        ? (body.defaultTheme as ShellTheme)
-        : fallback.defaultTheme,
-      defaultAccent: ACCENT_SET.has(body.defaultAccent as Accent)
-        ? (body.defaultAccent as Accent)
-        : fallback.defaultAccent,
-    };
+    const body: unknown = await res.json();
+    const parsed = themingDefaultsSchema.safeParse(body);
+    if (!parsed.success) {
+      console.warn(
+        `[shell-kit/next] /apps/${slug}/meta body failed schema validation; falling back to ${fallback.defaultTheme}/${fallback.defaultAccent}`,
+      );
+      return fallback;
+    }
+    return parsed.data;
   } catch (err) {
     console.warn(
       `[shell-kit/next] /apps/${slug}/meta failed (${err instanceof Error ? err.message : 'unknown'}); falling back to ${fallback.defaultTheme}/${fallback.defaultAccent}`,

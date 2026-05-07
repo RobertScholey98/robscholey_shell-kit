@@ -111,4 +111,16 @@ describe('fetchAppMeta', () => {
 
     expect(result).toEqual({ defaultTheme: 'dark', defaultAccent: 'mono' });
   });
+
+  it('falls back to defaults when the response body has invalid enum values', async () => {
+    vi.spyOn(console, 'warn').mockImplementation(() => {});
+    global.fetch = vi.fn().mockResolvedValue({
+      ok: true,
+      json: async () => ({ defaultTheme: 'sepia', defaultAccent: 'pink' }),
+    }) as unknown as typeof fetch;
+
+    const result = await fetchAppMeta('portfolio');
+
+    expect(result).toEqual({ defaultTheme: 'dark', defaultAccent: 'teal' });
+  });
 });

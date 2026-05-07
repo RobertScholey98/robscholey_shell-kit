@@ -28,6 +28,7 @@ export default defineConfig({
     'react-dom',
     'next',
     'next/navigation',
+    '@robscholey/contracts',
     '@robscholey/shell-kit/next/client',
   ],
   outExtension({ format }) {
