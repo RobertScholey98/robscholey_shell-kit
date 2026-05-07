@@ -298,3 +298,30 @@
   --animate-accordion-down:  accordion-down 200ms ease-out;
   --animate-accordion-up:    accordion-up 200ms ease-out;
 }
+
+/*
+ * Skip-to-main-content link rendered by `<ShellRootLayout>`. Visually hidden
+ * until focused via Tab so keyboard users can bypass the header chrome
+ * without seeing the affordance during normal mouse use. The shell-kit
+ * subpath defaults to mounting one — apps that don't want it pass
+ * `skipLink={false}`.
+ */
+.skip-link {
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding: 0.5rem 0.75rem;
+  background: var(--accent);
+  color: var(--bg);
+  font-size: 0.875rem;
+  font-weight: 500;
+  border-radius: 0 0 4px 0;
+  transform: translateY(-110%);
+  transition: transform 120ms ease-out;
+  z-index: 100;
+}
+.skip-link:focus-visible {
+  transform: translateY(0);
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}

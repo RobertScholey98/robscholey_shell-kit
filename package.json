@@ -1,6 +1,6 @@
 {
   "name": "@robscholey/shell-kit",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "description": "Shared postMessage protocol, React hooks, and TanStack Query integration for robscholey.com sub-apps",
   "repository": {
     "type": "git",
@@ -21,7 +21,17 @@
       "import": "./dist/ui/index.mjs",
       "require": "./dist/ui/index.js"
     },
-    "./ui/theme.css": "./src/ui/theme.css"
+    "./ui/theme.css": "./src/ui/theme.css",
+    "./next": {
+      "types": "./dist/next/index.d.ts",
+      "import": "./dist/next/index.mjs",
+      "require": "./dist/next/index.js"
+    },
+    "./next/client": {
+      "types": "./dist/next/client.d.ts",
+      "import": "./dist/next/client.mjs",
+      "require": "./dist/next/client.js"
+    }
   },
   "files": [
     "dist",
